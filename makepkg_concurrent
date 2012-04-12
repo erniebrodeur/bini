@@ -1,0 +1,15 @@
+#!/usr/bin/ruby
+
+### Tweakables
+Cower_dir = "/home/ebrodeur/cower"
+
+# give it a directory to run.
+def run_makepkg(dir)
+	Dir.chdir dir
+	%x[makepkg]
+end
+
+
+Dir.glob("#{Cower_dir}/*").each do |d|
+	run_makepkg d
+end
