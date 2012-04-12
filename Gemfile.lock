@@ -1,0 +1,9 @@
+GEM
+  specs:
+    coderay (0.9.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  coderay
