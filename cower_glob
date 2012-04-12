@@ -8,7 +8,7 @@ Options.verbose = false
 Options.outofdate = false
 
 OptionParser.new do |opts|
-  opts.banner = "Usage: example.rb [options]"
+  opts.banner = "Usage: cower_glob [options] search string"
 
   opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
     Options.verbose = v
@@ -18,7 +18,7 @@ OptionParser.new do |opts|
   end
 end.parse!
 
-#give it strings, returns a hash of results.
+#give it strings, returns an array of hashed of results.
 def get_list(string)
 	a = []
 	results = %x[cower --listdelim ',' -s --format '%n,%v,%a,%c,%t,%d' #{string}]
@@ -43,4 +43,16 @@ def get_list(string)
 	a
 end
 
-puts get_list 'gtk3 theme'
+# take an array of hashes, start downloading stuff to the current dir.
+def fetch_list(list)
+	list.each do |h|
+		puts "downloading #{h[:name]}"
+		%x[cower --brief -dd #{h[:name]}]
+	end
+end
+
+if ARGV.empty?
+	puts "Please include something to search for."
+else
+	fetch_list get_list ARGV.join " "
+end
