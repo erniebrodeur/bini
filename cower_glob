@@ -1,0 +1,46 @@
+#!/usr/bin/ruby
+require 'optparse'
+require 'ostruct'
+
+### Options Block
+Options = OpenStruct.new
+Options.verbose = false
+Options.outofdate = false
+
+OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
+
+  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+    Options.verbose = v
+  end
+  opts.on("-o", "--[no-]outofdate", "Download out of date packages.") do |ood|
+  	Options.outofdate = ood
+  end
+end.parse!
+
+#give it strings, returns a hash of results.
+def get_list(string)
+	a = []
+	results = %x[cower --listdelim ',' -s --format '%n,%v,%a,%c,%t,%d' #{string}]
+
+	results.split("\n").each do |line|
+		h = {}
+		# so this was fun, the idea here is that we loop thru a list of words, and keep count.
+		# since the words line up to the order above, the results will line up as well.
+		words = line.split ","
+		i = 0
+		%w{name ver last cat outofdate desc}.each do |w|
+			h[w.to_sym] = words[i]
+			i = i + 1
+		end
+
+		# TODO: make this less ugly.
+		# so outofdate/last don't need to be strings, lets fix it.
+		h[:outofdate] == 'yes'  ? h[:outofdate] = true : h[:outofdate] = false
+		h[:last] = h[:last].to_i
+		a.push h
+	end
+	a
+end
+
+puts get_list 'gtk3 theme'
