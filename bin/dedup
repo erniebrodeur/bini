@@ -1,0 +1,37 @@
+#!/usr/bin/ruby
+
+# given a list of files, check the md5 sums and report any duplicates to console.
+
+require 'digest/md5'
+
+# this is our hash of checksums, each time we find a match we add it to this list.
+# it will take a file or directory as argument.   If it it is a directory, it will glob
+# and call itself recursively.
+Checksums = {}
+def collect_md5sum(file)
+	# Is this a directory? lets call ourself a bunch to figure this shit out.
+	if Dir.exist? file
+		Dir.glob("#{file}/*").each {|f| collect_md5sum f}
+	else
+		md5 = Digest::MD5.hexdigest open(file).read()
+		md5 = md5.to_sym
+		Checksums[md5] = [] if !Checksums[md5]
+		Checksums[md5].push file
+		Checksums[md5]
+	end
+end
+
+if ARGV.any?
+	ARGV.each do |f|
+		collect_md5sum f
+	end
+end
+
+Checksums.each do |k,v|
+	if !v.one?
+		puts "Found duplicates for #{k}, files:"
+		v.each do |i|
+			puts "#{i}"
+		end
+	end
+end
