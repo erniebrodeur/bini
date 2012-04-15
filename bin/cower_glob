@@ -4,6 +4,8 @@ Version = "0.9.0"
 Banner = "Usage: cower_glob [options] search string"
 
 require 'cli'
+include ErnieBrodeur
+
 Options.bool_on "outofdate", "Include out of date results."
 Options.parse!
 

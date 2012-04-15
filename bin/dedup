@@ -4,6 +4,8 @@ Version = "0.0.1"
 Banner = "This is a utilty to help identify duplicate files in a list and print them to console."
 
 require 'cli'
+include ErnieBrodeur
+
 Options.parse!
 
 ### The app starts here.
@@ -21,6 +23,9 @@ def collect_md5sum(file)
 		Checksums[md5]
 	end
 end
+
+
+Options.on_pry
 
 if ARGV.any?
 	ARGV.each do |f|
