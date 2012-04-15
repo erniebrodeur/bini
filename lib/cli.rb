@@ -1,9 +1,7 @@
 # This library is to reduce the amount of effort I need to build a binary with option parsing
 # and sensable defaults.  It is not intended to be convient for anybody but me, their
 # are a host of good @options out there if you want cli tools.
-
 require 'optparse'
-require 'ostruct'
 
 class OptBlob
   def initialize
@@ -20,14 +18,23 @@ class OptBlob
   end
 
   #TODO figure out a more dynamic way to include the parser and hash table.
-  def []=(item)
-    @options[item]
+  def []=(key, value)
+    @options[key] = value
   end
 
-  def [](item)
-    @options[item]
+  def [](key)
+    @options[key]
   end
 
+  # This will build an on/off option with a default value set to false.
+  def bool_on(word, description = "")
+  	Options[word.to_sym] = false
+  	@parser.on "-#{word.chars.first}", "--[no]#{word}", description  do |o|
+  		Options[word.to_sym] == o
+  	end
+  end
+
+  # This is the parser value on lifted up.
   def on(*opts, &block)
   	@parser.on(*opts, &block)
   end
