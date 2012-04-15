@@ -1,18 +1,19 @@
 #!/usr/bin/ruby
+$:.push '/home/ebrodeur/Projects/bin_snippets/lib'
+Version = "0.0.1"
+Banner = "This is a utilty to help identify duplicate files in a list and print them to console."
 
-# given a list of files, check the md5 sums and report any duplicates to console.
+require 'cli'
+Options.parse!
 
+### The app starts here.
 require 'digest/md5'
-
-# this is our hash of checksums, each time we find a match we add it to this list.
-# it will take a file or directory as argument.   If it it is a directory, it will glob
-# and call itself recursively.
 Checksums = {}
 def collect_md5sum(file)
 	# Is this a directory? lets call ourself a bunch to figure this shit out.
 	if Dir.exist? file
 		Dir.glob("#{file}/*").each {|f| collect_md5sum f}
-	else
+	elsif File.exist? file
 		md5 = Digest::MD5.hexdigest open(file).read()
 		md5 = md5.to_sym
 		Checksums[md5] = [] if !Checksums[md5]
