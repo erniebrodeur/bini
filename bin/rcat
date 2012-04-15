@@ -1,14 +1,15 @@
 #!/usr/bin/ruby
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
-Banner = "Usage: Use ruby to cat a file and produce colored output."
-Version = "0.9.0"
-
-
+require 'app'
 require 'cli'
-Options.parse!
 include ErnieBrodeur
-require 'coderay'
 
+App.banner = "Usage: Use ruby to cat a file and produce colored output."
+App.version = "0.9.0"
+
+Options.parse!
+
+require 'coderay'
 if __FILE__ == $0
 	if ARGV.empty?
 		puts 'you need to supply a list of filenames to cat to screen.'

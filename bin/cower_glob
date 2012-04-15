@@ -1,10 +1,12 @@
 #!/usr/bin/ruby
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
-Version = "0.9.0"
-Banner = "Usage: cower_glob [options] search string"
-
+require 'app'
 require 'cli'
 include ErnieBrodeur
+
+App.version = "0.9.0"
+App.banner = "Usage: cower_glob [options] search string"
+
 
 Options.bool_on "outofdate", "Include out of date results."
 Options.parse!

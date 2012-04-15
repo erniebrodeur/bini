@@ -1,10 +1,11 @@
 #!/usr/bin/ruby
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
-Version = "0.0.1"
-Banner = "This is a utilty to help identify duplicate files in a list and print them to console."
-
+require 'app'
 require 'cli'
 include ErnieBrodeur
+
+App.version = "0.0.1"
+App.banner = "This is a utilty to help identify duplicate files in a list and print them to console."
 
 Options.parse!
 
