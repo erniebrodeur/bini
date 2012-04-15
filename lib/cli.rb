@@ -11,8 +11,13 @@ Options.verbose = false
 Options.version = false
 
 OptionParser.new do |opts|
-  opts.banner = "Usage: Use ruby to cat a file and produce colored output."
+  opts.banner = Banner
 
   opts.on("-v", "--[no-]verbose", "Run verbosely") { |verbose| Options.verbose = v }
   opts.on("-V", "--version", "Print version") { |version| Options.version = true}
 end.parse!
+
+if Options.version
+	puts Version
+	exit 0
+end
