@@ -9,10 +9,10 @@ module ErnieBrodeur
       @options = {}
 
       @parser = OptionParser.new do |opts|
-        opts.banner = Banner
+        opts.banner = ErnieBrodeur::App.banner
 
         opts.on("-v", "--[no-]verbose", "Run verbosely") { |verbose| @options[:verbose] = verbose }
-        opts.on("-V", "--version", "Print version") { |version| @options[:version] = version}
+        opts.on("-V", "--version", "Print version") { |version| @options[:version] = true}
         opts.on("-p", "--pry", "open a pry shell.") { |pry| @options[:pry] = true}
       end
     end
@@ -48,10 +48,11 @@ module ErnieBrodeur
     end
 
     def parse!
+      @parser.banner = ErnieBrodeur::App.banner
       @parser.parse!
 
       if @options[:version]
-        puts Version
+        puts ErnieBrodeur::App.version
         exit 0
       end
     end
