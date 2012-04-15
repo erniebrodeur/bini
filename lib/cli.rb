@@ -6,14 +6,13 @@ require 'optparse'
 class OptBlob
   def initialize
     @options = {}
-    @options[:verbose] = false
-    @options[:version] = false
 
     @parser = OptionParser.new do |opts|
       opts.banner = Banner
 
-      opts.on("-v", "--[no-]verbose", "Run verbosely") { |verbose| @options[:verbose] = v }
+      opts.on("-v", "--[no-]verbose", "Run verbosely") { |verbose| @options[:verbose] = verbose }
       opts.on("-V", "--version", "Print version") { |version| @options[:version] = version}
+      opts.on("-p", "--pry", "open a pry shell.") { |pry| @options[:pry] = true}
     end
   end
 
@@ -55,6 +54,13 @@ class OptBlob
       exit 0
     end
  	end
+
+  def on_pry
+    if @options[:pry]
+      require 'pry'
+      binding.pry
+    end
+  end
 end
 
 Options = OptBlob.new
