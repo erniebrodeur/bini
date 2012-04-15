@@ -1,22 +1,11 @@
 #!/usr/bin/ruby
-require 'optparse'
-require 'ostruct'
+$:.push '/home/ebrodeur/Projects/bin_snippets/lib'
+Version = "0.9.0"
+Banner = "Usage: cower_glob [options] search string"
 
-### Options Block
-Options = OpenStruct.new
-Options.verbose = false
-Options.outofdate = false
-
-OptionParser.new do |opts|
-  opts.banner = "Usage: cower_glob [options] search string"
-
-  opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
-    Options.verbose = v
-  end
-  opts.on("-o", "--[no-]outofdate", "Download out of date packages.") do |ood|
-  	Options.outofdate = ood
-  end
-end.parse!
+require 'cli'
+Options.bool_on "outofdate", "Include out of date results."
+Options.parse!
 
 #give it strings, returns an array of hashed of results.
 def get_list(string)
