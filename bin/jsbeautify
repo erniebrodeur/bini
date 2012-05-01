@@ -1,0 +1,25 @@
+#!/usr/bin/ruby
+$:.push '/home/ebrodeur/Projects/bin_snippets/lib'
+require 'app'
+require 'cli'
+include ErnieBrodeur
+
+App.version = "0.1.0"
+App.banner = "Usage: print json into a pretty format, or break trying."
+
+Options.parse!
+
+require 'json'
+if __FILE__ == $0
+	if ARGV.empty?
+		puts 'you need to supply a list of filenames to cat to screen.'
+	else
+		ARGV.each do |f|
+			if File.exist? f
+				puts JSON.pretty_generate JSON::parse open(f).read
+			else
+				puts "No such file: #{f}"
+			end
+		end
+	end
+end
