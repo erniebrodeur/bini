@@ -10,10 +10,15 @@ App.banner = "Usage: print json into a pretty format, or break trying."
 Options.parse!
 
 require 'yajl'
+
+def process_input(s)
+	puts Yajl.dump(Yajl.load(s), {:pretty => true})
+end
+
 if __FILE__ == $0
 	if ARGV.empty?
 		begin
-			puts Yajl.load $stdin.read
+			puts process_input STDIN
 		rescue Exception => e
 			puts e.message
 			exit
@@ -21,7 +26,7 @@ if __FILE__ == $0
 	else
 		ARGV.each do |f|
 			if File.exist? f
-				puts Yajl.load open(f).read
+				process_input open(f).read
 			else
 				puts "No such file: #{f}"
 			end
