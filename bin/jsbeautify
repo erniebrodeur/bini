@@ -4,19 +4,24 @@ require 'app'
 require 'cli'
 include ErnieBrodeur
 
-App.version = "0.1.0"
+App.version = "0.9.0"
 App.banner = "Usage: print json into a pretty format, or break trying."
 
 Options.parse!
 
-require 'json'
+require 'yajl'
 if __FILE__ == $0
 	if ARGV.empty?
-		puts JSON.pretty_generate JSON::parse $stdin.read
+		begin
+			puts Yajl.load $stdin.read
+		rescue Exception => e
+			puts e.message
+			exit
+		end
 	else
 		ARGV.each do |f|
 			if File.exist? f
-				puts JSON.pretty_generate JSON::parse open(f).read
+				puts Yajl.load open(f).read
 			else
 				puts "No such file: #{f}"
 			end
