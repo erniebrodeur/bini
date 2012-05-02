@@ -12,7 +12,7 @@ Options.parse!
 require 'json'
 if __FILE__ == $0
 	if ARGV.empty?
-		puts 'you need to supply a list of filenames to cat to screen.'
+		puts JSON.pretty_generate JSON::parse $stdin.read
 	else
 		ARGV.each do |f|
 			if File.exist? f
