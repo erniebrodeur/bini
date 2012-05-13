@@ -24,6 +24,7 @@ GEM
     rest-client (1.6.7)
       mime-types (>= 1.16)
     tzinfo (0.3.33)
+    yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
@@ -32,3 +33,4 @@ DEPENDENCIES
   coderay
   couchrest
   couchrest_model
+  yajl-ruby
