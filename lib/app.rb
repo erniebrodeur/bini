@@ -22,6 +22,6 @@ module ErnieBrodeur
 	# This will load a helper, if it exists.
 	begin
 		require "helpers/#{App.name}"
-	rescue
+	rescue LoadError
 	end
 end
