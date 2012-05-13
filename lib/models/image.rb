@@ -34,7 +34,7 @@ module ErnieBrodeur
           self.height = i[:height]
           self.format = i[:type]
           self.transparency = i[:transparency]
-          self.ratio = width / height
+          self.ratio = (width / height).round 3
         end
       end
 
@@ -52,7 +52,7 @@ module ErnieBrodeur
     return nil if !ErnieBrodeur.is_image? filename
 
     #TODO not have this unrolled, make it more dynamic.
-    width, height, type, transparency =  %x[identify -ping -format '%w %h %m %z %A' '#{filename}'].split
+    width, height, type, transparency =  %x[identify -ping -format '%w %h %m %A' '#{filename}'].split
 
     h = {}
     h[:width] = width.to_f
