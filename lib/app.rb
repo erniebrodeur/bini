@@ -1,4 +1,8 @@
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
+
+# Some requires, they don't fit elsewhere.
+require 'yajl'
+
 module ErnieBrodeur
 	class Application
 		attr_accessor :version
