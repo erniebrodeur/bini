@@ -1,3 +1,4 @@
+$:.push '/home/ebrodeur/Projects/bin_snippets/lib'
 module ErnieBrodeur
 	class Application
 		attr_accessor :version
@@ -18,4 +19,9 @@ module ErnieBrodeur
 	end
 
 	App = Application.new
+	# This will load a helper, if it exists.
+	begin
+		require "helpers/#{App.name}"
+	rescue
+	end
 end
