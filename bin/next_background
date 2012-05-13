@@ -3,6 +3,7 @@ $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
 require 'app'
 require 'cli'
 require 'couch'
+require 'filemagic'
 
 include ErnieBrodeur
 include ErnieBrodeur::NextBackground
