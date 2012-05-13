@@ -29,6 +29,18 @@ module ErnieBrodeur
       	@configuration = {}
       end
     end
+
+    def [](k)
+    	@configuration[k]
+    end
+
+    def []=(k,v)
+    	@configuration[k] = v
+    end
+
+    def to_s
+    	@configuration.to_s
+    end
   end
 
   Config = ConfigBlob.new
