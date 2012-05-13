@@ -25,6 +25,7 @@ The Gemfile here isn't split up per package, it is just a home for the various c
 ## Alpha:
 * dedup: Useful for deduplicating data.
 * next_background: Will change backgrounds when it's done.
+* makepkg_concurrent: go into the ~/cower dir and make everything, all at once, horribly noisy.  Currently isn't concurrent.
 
 # Library notes
 
