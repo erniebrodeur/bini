@@ -7,7 +7,9 @@ module ErnieBrodeur
   end
 end
 
-# TODO not suck here by hardcoding this.
-Dir.glob('/home/ebrodeur/Projects/bin_snippets/lib/models/*.rb').each do |f|
-  require f
+# TODO not suck by hard coding this
+
+# since we have to have a specific order, lets just make a word list real quick.
+%w{file image}.each do |f|
+	require "/home/ebrodeur/Projects/bin_snippets/lib/models/#{f}"
 end
