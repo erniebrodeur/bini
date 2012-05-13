@@ -12,8 +12,10 @@ module ErnieBrodeur
       property :size,   Integer
       property :md5sum, String
 
-      view_by :filename
-      view_by :md5sum
+      design do
+        view :by_filename
+        view :by_md5sum
+      end
 
       # This allows us to optionally do some basic processing of the file.
       def initialize(*params)
