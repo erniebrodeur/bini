@@ -2,7 +2,6 @@ module ErnieBrodeur
   module Models
     # You must always supply the filename.
     class File < CouchRest::Model::Base
-      puts ErnieBrodeur::Couch::DB
       use_database ErnieBrodeur::Couch::DB
 
       property :_id, String, :alias => :filename
@@ -14,6 +13,7 @@ module ErnieBrodeur
       property :md5sum, String
 
       view_by :filename
+      view_by :md5sum
 
       # This allows us to optionally do some basic processing of the file.
       def initialize(*params)
