@@ -1,10 +1,11 @@
 module ErnieBrodeur
   class ConfigBlob
     BaseDir = "/home/ebrodeur/.config/erniebrodeur"
+
     attr_accessor :configuration
 
-    FileUtils.mkdir_p BaseDir if !Dir.exist? BaseDir
     def initialize
+    	FileUtils.mkdir_p BaseDir if !Dir.exist? BaseDir
       load
     end
 
