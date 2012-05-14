@@ -12,6 +12,7 @@ module ErnieBrodeur
 
       design do
         view :by_md5sum
+        view :by_md5sum_and_ratio
         view :by_filename
         view :by_height
         view :by_width

@@ -1,33 +1,39 @@
 module ErnieBrodeur
-	module NextBackground
-		def add_directory(dir)
-			Dir.glob("#{dir}**/*").each do |file|
-				add_file file
-			end
-		end
+  module NextBackground
+    def add_directory(dir)
+      Dir.glob("#{dir}**/*").each do |file|
+        add_file file
+      end
+    end
 
-		def add_file(file)
-			# does it exist in the data base? if so return it
-			if (f = ErnieBrodeur::Models::Image.find(file))
-				puts "File existed: #{file}"
-				return f
-			end
-			# Is our file an image?  if not, just return nil.
-			return nil if !ErnieBrodeur::is_image?(file)
-			puts "Adding file: #{file}"
-			begin
-				ErnieBrodeur::Models::Image.create!(:filename => file, :md5sum => true)
-			rescue
-			end
-		end
+    def add_file(file)
+      # does it exist in the data base? if so return it
+      if (f = ErnieBrodeur::Models::Image.find(file))
+        puts "File existed: #{file}"
+        return f
+      end
+      # Is our file an image?  if not, just return nil.
+      return nil if !ErnieBrodeur::is_image?(file)
+      puts "Adding file: #{file}"
+      begin
+        ErnieBrodeur::Models::Image.create!(:filename => file, :md5sum => true)
+      rescue
+      end
+    end
 
-		def run_once
-		end
+    def run_once
+      return nil if !Config["output_files"]
 
-		def output_file
-		end
+      list = ErnieBrodeur::Models::Image.by_ratio.select {|i| i.ratio == 1.778}
+      Config["output_files"].each do |f|
+      	File.delete f if File.symlink? f
 
-		def daemonize
-		end
-	end
+        File.symlink list[Random.rand(list.count)].filename, f
+        %x[xfdesktop --reload]
+      end
+    end
+
+    def daemonize
+    end
+  end
 end
