@@ -6,7 +6,7 @@ Consider it a library of useful utilities.
 # Directory structure:
 
 * bin
- * This directory contains all the scripts themselves.  This is just so README.md and other files don't show up in PATH.
+ * This directory contains all the scripts themselves.  This is to limit $PATH polution and make it installable as a gem.
 
 * lib
  * Our supporting members go here, nothing fancy just grouped together in modules based on intended usage.
@@ -21,18 +21,19 @@ The Gemfile here isn't split up per package, it is just a home for the various c
 * rcat: Color output via coderay, not that sophisticated yet, can't pipe with it.
 * jsbeautify: run a json blob through yajl to pretty it up and check for syntax, supports piping.
 * cower_glob: download a bunch of stuff from AUR based on a glob string.
+* next_background: Indexes directories into couch, then can change links and reset xfce4 backgrounds.
 
 ## Alpha:
 * dedup: Useful for deduplicating data.
-* next_background: Will change backgrounds when it's done.
 * makepkg_concurrent: go into the ~/cower dir and make everything, all at once, horribly noisy.  Currently isn't concurrent.
 
 # Library notes
 
 * app: Gives some basic application support, and some universal namespacing.  all other components depend on this being loaded first.
 * cli: Add option parsing and some support to break in via pry into any app.
+* config: Used for config file loading and saving in ~/.config/erniebrodeur
 * couch: mixin support for couchdb'ing on the localhost, including a few basic model's I use all the time.
-* filemagic: File detection based on the unuix 'file' command to do magic detection.  Currently only returns mime_type.
+* filemagic: File detection based on the unix 'file' command to do magic detection.  Currently only returns mime_type.
 
 # Couch model types:
 
