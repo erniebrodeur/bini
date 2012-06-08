@@ -26,7 +26,7 @@ module ErnieBrodeur
 
       list = ErnieBrodeur::Models::Image.by_ratio.select {|i| i.ratio == 1.778}
       Config["output_files"].each do |f|
-      	File.delete f if File.symlink? f
+        File.delete f if File.symlink? f
 
         File.symlink list[Random.rand(list.count)].filename, f
         %x[xfdesktop --reload]
@@ -34,6 +34,12 @@ module ErnieBrodeur
     end
 
     def daemonize
+      App.daemonize(:mulitple_pids => false) {
+        loop do
+          run_once
+          sleep 10
+        end
+      }
     end
   end
 end
