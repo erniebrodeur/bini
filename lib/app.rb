@@ -51,8 +51,7 @@ module ErnieBrodeur
 
   App = Application.new
   # This will load a helper, if it exists.
-  begin
-    require "helpers/#{App.name}"
-  rescue LoadError
-  end
+
+  f = "#{$:.last}/helpers/#{App.name}.rb"
+  require f if File.exist? f
 end
