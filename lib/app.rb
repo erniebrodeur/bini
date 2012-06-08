@@ -36,8 +36,6 @@ module ErnieBrodeur
     end
 
     def daemonize(*params, &block)
-      FileUtils.mkdir_p cache_dir if !Dir.exist? cache_dir
-
       if params[0] && !params[0][:multiple_pids] && running?
         puts "#{App.name} appears to be running, only one allowed, exiting."
         exit
@@ -50,8 +48,8 @@ module ErnieBrodeur
   end
 
   App = Application.new
-  # This will load a helper, if it exists.
 
+  # This will load a helper, if it exists.
   f = "#{$:.last}/helpers/#{App.name}.rb"
   require f if File.exist? f
 end
