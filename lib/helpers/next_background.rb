@@ -24,11 +24,13 @@ module ErnieBrodeur
     def run_once
       return nil if !Config["output_files"]
 
-      list = ErnieBrodeur::Models::Image.by_ratio.select {|i| i.ratio == 1.778}
+      @list = ErnieBrodeur::Models::Image.by_ratio.select {|i| i.ratio == 1.778} if !@list
+      require 'pry'
+      binding.pry
       Config["output_files"].each do |f|
         File.delete f if File.symlink? f
 
-        File.symlink list[Random.rand(list.count)].filename, f
+        File.symlink @list[Random.rand(@list.count)].filename, f
         %x[xfdesktop --reload]
       end
     end
