@@ -77,7 +77,7 @@ end
 module Kernel
   def puts (s)
   	if ErnieBrodeur::Log.override_puts?
-    	ErnieBrodeur::Log.debug s
+    	ErnieBrodeur::Log.info s
     else
     	Kernel::puts s
     end
