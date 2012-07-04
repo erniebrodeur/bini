@@ -12,13 +12,9 @@ module ErnieBrodeur
       @options[:utc] = true
       @options[:level] = ::Logger::WARN
       @options[:override_puts] = false
+      @options[:filename] = STDOUT
 
-      @l = ::Logger.new(STDOUT)
-      @l.level = @options[:level]
-
-      @l.formatter = proc do |severity, datetime, progname, msg|
-        "[#{fmt_time.asctime}] [#{severity}]: #{msg}\n"
-      end
+      create_logger
     end
 
     def method_missing(sym, *args, &block)
@@ -59,6 +55,10 @@ module ErnieBrodeur
     	false
     end
 
+    def filename(file)
+      @options[:filename] = file
+      create_logger
+    end
     private
     def fmt_time
       if @options[:utc]
@@ -66,6 +66,16 @@ module ErnieBrodeur
       else
         Time.now
       end
+    end
+
+    def create_logger
+      @l = ::Logger.new(@options[:filename])
+      @l.level = @options[:level]
+
+      @l.formatter = proc do |severity, datetime, progname, msg|
+        "[#{fmt_time.asctime}] [#{severity}]: #{msg}\n"
+      end
+
     end
   end
 
