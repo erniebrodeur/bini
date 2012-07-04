@@ -4,9 +4,12 @@
 # It should have a semi easy to read standard format
 # it will have multiple formats available.
 # it should produce colorized output (either parsed or part of the file format)
+
 module ErnieBrodeur
+
   class Logger
-    def initialize
+    def initialize(*args)
+
       @l = ::Logger.new(STDOUT)
 
       @l.formatter = proc do |severity, datetime, progname, msg|
@@ -16,7 +19,15 @@ module ErnieBrodeur
 
     def method_missing(sym, *args, &block)
     	@l.send sym, *args, &block
+    	exit if sym == :fatal
     end
+
+    def enable
+    end
+
+    def disable
+    end
+
   end
 
   Log = ErnieBrodeur::Logger.new
