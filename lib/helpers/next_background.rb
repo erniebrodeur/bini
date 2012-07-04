@@ -1,7 +1,8 @@
 module ErnieBrodeur
   module NextBackground
     def add_directory(dir)
-      Dir.glob("#{dir}**/*").each do |file|
+      files = Dir.glob("#{dir}**/*").each do |file|
+        puts "Found #{files.count}, starting scanning . . . "
         add_file file
       end
     end
@@ -13,16 +14,22 @@ module ErnieBrodeur
         return f
       end
       # Is our file an image?  if not, just return nil.
-      return nil if !ErnieBrodeur::is_image?(file)
-      puts "Adding file: #{file}"
-      begin
-        ErnieBrodeur::Models::Image.create!(:filename => file, :md5sum => true)
-      rescue
+      if !ErnieBrodeur::is_image?(file)
+        puts "#Skipping file: #{file}"
+      else
+        puts "Adding file: #{file}"
+        begin
+          ErnieBrodeur::Models::Image.create!(:filename => file, :md5sum => true)
+        rescue
+        end
       end
     end
 
     def run_once
-      return nil if !Config["output_files"]
+      if !Config["output_files"]
+        puts 'Nothing configured! exiting.'
+        exit
+      end
 
       @list = ErnieBrodeur::Models::Image.by_ratio.select {|i| i.ratio == 1.778} if !@list
       Config["output_files"].each do |f|
