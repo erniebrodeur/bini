@@ -2,6 +2,7 @@
 # It should have a semi easy to read standard format
 # it will have multiple formats available.
 # it should produce colorized output (either parsed or part of the file format)
+require 'logger'
 
 module ErnieBrodeur
   class Logger
@@ -39,9 +40,18 @@ module ErnieBrodeur
       @options[sym] = false
     end
 
-    def level(sym)
-    	@options[:level] = sym
-    	@l.level = sym
+    def level(s)
+      level = case s
+        when 'fatal' then ::Logger::FATAL
+        when 'error' then ::Logger::ERROR
+        when 'warn' then ::Logger::WARN
+        when 'info' then ::Logger::INFO
+        when 'debug' then ::Logger::DEBUG
+        else ::Logger::UNKNOWN
+      end
+
+    	@options[:level] = level
+    	@l.level = level
     end
 
     def override_puts?
@@ -59,7 +69,7 @@ module ErnieBrodeur
     end
   end
 
-  App.plugins.push ErnieBrodeur::Logger
+  App.plugins.push 'logging'
   Log = ErnieBrodeur::Logger.new
 end
 

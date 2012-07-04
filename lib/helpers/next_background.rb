@@ -25,13 +25,15 @@ module ErnieBrodeur
       return nil if !Config["output_files"]
 
       @list = ErnieBrodeur::Models::Image.by_ratio.select {|i| i.ratio == 1.778} if !@list
-      require 'pry'
-      binding.pry
       Config["output_files"].each do |f|
         File.delete f if File.symlink? f
+        puts "Deleted #{f}"
 
-        File.symlink @list[Random.rand(@list.count)].filename, f
+        new_f = @list[Random.rand(@list.count)].filename
+        File.symlink new_f, f
+        puts "Linked #{new_f} to #{f}"
         %x[xfdesktop --reload]
+        puts "Reloaded xfce4."
       end
     end
 

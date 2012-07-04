@@ -1,6 +1,7 @@
 #!/usr/bin/ruby
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
 require 'app'
+require 'log'
 require 'cli'
 require 'couch'
 require 'config'
@@ -8,6 +9,7 @@ require 'filemagic'
 
 include ErnieBrodeur
 include ErnieBrodeur::NextBackground
+ErnieBrodeur::Log.enable :override_puts
 
 App.version = "0.1.0"
 App.banner = "This will change backgrounds based on a variety of rules."

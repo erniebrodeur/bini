@@ -6,7 +6,7 @@ module ErnieBrodeur
     DB = CouchRest.database! "http://localhost:5984/#{App.name}"
   end
 
-  App.plugins.push ErnieBrodeur::Couch
+  App.plugins.push 'couch'
 end
 
 # TODO not suck by hard coding this

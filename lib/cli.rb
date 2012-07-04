@@ -14,6 +14,9 @@ module ErnieBrodeur
         opts.on("-v", "--[no-]verbose", "Run verbosely") { |verbose| @options[:verbose] = verbose }
         opts.on("-V", "--version", "Print version") { |version| @options[:version] = true}
         opts.on("-p", "--pry", "open a pry shell.") { |pry| @options[:pry] = true}
+        if App.plugins.include? 'logging'
+          opts.on("-l", "--log-level LEVEL", "Change the log level, default is warn.") { |level| ErnieBrodeur::Log.level level }
+        end
       end
     end
 
@@ -65,6 +68,6 @@ module ErnieBrodeur
     end
   end
 
-  App.plugins.push OptBlob
+  App.plugins.push "cli"
   Options = OptBlob.new
 end

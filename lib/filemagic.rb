@@ -9,5 +9,5 @@ module ErnieBrodeur
 			end
 		end
 	end
-	App.plugins.push FileMagic
+	App.plugins.push 'filemagic'
 end
