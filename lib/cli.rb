@@ -11,7 +11,6 @@ module ErnieBrodeur
       @parser = OptionParser.new do |opts|
         opts.banner = ErnieBrodeur::App.banner
 
-        opts.on("-v", "--[no-]verbose", "Run verbosely") { |verbose| @options[:verbose] = verbose }
         opts.on("-V", "--version", "Print version") { |version| @options[:version] = true}
         opts.on("-p", "--pry", "open a pry shell.") { |pry| @options[:pry] = true}
         if App.plugins.include? 'logging'
