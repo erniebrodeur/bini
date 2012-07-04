@@ -4,7 +4,6 @@
 # it should produce colorized output (either parsed or part of the file format)
 
 module ErnieBrodeur
-
   class Logger
     def initialize
     	@options = {}
@@ -60,6 +59,7 @@ module ErnieBrodeur
     end
   end
 
+  App.plugins.push ErnieBrodeur::Logger
   Log = ErnieBrodeur::Logger.new
 end
 

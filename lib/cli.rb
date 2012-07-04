@@ -65,5 +65,6 @@ module ErnieBrodeur
     end
   end
 
+  App.plugins.push OptBlob
   Options = OptBlob.new
 end

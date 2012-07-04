@@ -43,6 +43,6 @@ module ErnieBrodeur
     	@configuration.to_s
     end
   end
-
+  App.plugins.push ConfigBlob
   Config = ConfigBlob.new
 end

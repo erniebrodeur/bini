@@ -9,6 +9,7 @@ module ErnieBrodeur
     attr_accessor :version
     attr_accessor :banner
     attr_accessor :long_description
+    attr_accessor :plugins
 
     # return the name of the app, for now this is just the cmd ran, later it will be
     # something generated but more unique.
@@ -33,6 +34,7 @@ module ErnieBrodeur
       @version = '0.0.0'
       @banner  = 'A bin snippet by Ernie Brodeur that does . . . something.'
       @long_description = ''
+      @plugins = []
     end
 
     def daemonize(*params, &block)
