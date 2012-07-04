@@ -6,12 +6,12 @@
 module ErnieBrodeur
 
   class Logger
-  	attr_reader :options
+    def initialize
+    	@options = {}
 
-    def initialize(*args)
-      @options = {}
       @options[:utc] = true
       @options[:level] = ::Logger::WARN
+      @options[:override_puts] = false
 
       @l = ::Logger.new(STDOUT)
       @l.level = @options[:level]
@@ -27,13 +27,27 @@ module ErnieBrodeur
     end
 
     def enable(sym)
-    	raise 'NoSuchOption' if @options[sym] == nil
-    	@options[sym] = true
+      raise 'NoSuchOption' if @options[sym] == nil
+      @options[sym] = true
+
+      if sym == :override_puts
+      	level ::Logger::DEBUG
+      end
     end
 
     def disable(sym)
-    	raise 'NoSuchOption' if @options[sym] == nil
-    	@options[sym] = false
+      raise 'NoSuchOption' if @options[sym] == nil
+      @options[sym] = false
+    end
+
+    def level(sym)
+    	@options[:level] = sym
+    	@l.level = sym
+    end
+
+    def override_puts?
+    	return true if @options[:override_puts]
+    	false
     end
 
     private
@@ -47,4 +61,15 @@ module ErnieBrodeur
   end
 
   Log = ErnieBrodeur::Logger.new
+end
+
+# better way to do this with: Kernel.module_eval def puts ...
+module Kernel
+  def puts (s)
+  	if ErnieBrodeur::Log.override_puts?
+    	ErnieBrodeur::Log.debug s
+    else
+    	Kernel::puts s
+    end
+  end
 end
