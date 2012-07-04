@@ -16,15 +16,8 @@ module ErnieBrodeur
       end
     end
 
-    # key is the log level and value is the msg to be logged.
-    def []=(key, value)
-      case key
-      	when :f || :fatal || /[fatal]/i then @l.fatal value
-      	when :e || :error || /[error]/i then @l.error value
-      	when :w || :warn  || /[warn]/i then @l.warn value
-      	when :i || :info  || /[info]/i then @l.info value
-      	when :d || :debug || /[debug]/i then @l.debug value
-     	end
+    def method_missing(sym, *args, &block)
+    	@l.send sym, *args, &block
     end
   end
 
