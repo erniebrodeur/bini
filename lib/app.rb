@@ -26,8 +26,14 @@ module ErnieBrodeur
     end
 
     def running?
-      return true if Sys::ProcTable.ps.select{|x| x.cmdline.include? App.name}.count >= 2
+      return true if Sys::ProcTable.ps.select{|x| x.cmdline =~ /.*#{App.name}.*-[dD].*/}.count >= 2
       nil
+    end
+
+    def pids?
+      a = Sys::ProcTable.ps.select{|x| x.cmdline =~ /.*#{App.name}.*-[dD].*/}.map {|x| x.pid}
+      a.delete $$
+      a
     end
 
     def initialize
@@ -39,13 +45,25 @@ module ErnieBrodeur
 
     def daemonize(*params, &block)
       if params[0] && !params[0][:multiple_pids] && running?
-        puts "#{App.name} appears to be running, only one allowed, exiting."
+        puts "#{App.name} appears to be running (#{pids?}), only one allowed, exiting."
         exit
       end
       puts "Forking to background."
 
       Process.daemon
       block.call
+    end
+
+    def kill_daemon
+      if !running?
+        puts "No pids found, exiting."
+        exit
+      end
+
+      pids?.each do |p|
+        puts "Killing #{p}"
+        %x[kill -9 #{p}]
+      end
     end
   end
 
