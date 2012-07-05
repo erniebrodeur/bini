@@ -41,10 +41,10 @@ module ErnieBrodeur
 
     def daemonize(*params, &block)
       if params[0] && !params[0][:multiple_pids] && pids
-        puts "#{App.name} appears to be running (#{pids}), only one allowed, exiting."
+        puts_or_log :info, "#{App.name} appears to be running (#{pids}), only one allowed, exiting."
         exit
       end
-      puts "Forking to background."
+      puts_or_log :info, "Forking to background."
 
       Process.daemon
       block.call
@@ -52,13 +52,21 @@ module ErnieBrodeur
 
     def kill_daemon
       if !pids
-        puts "No pids found, exiting."
-        exit
+        puts_or_log :fatal, "No pids found, exiting."
       end
 
       pids.each do |p|
-        puts "Killing #{p}"
+        puts_or_log :info, "Killing #{p}"
         %x[kill -TERM #{p}]
+      end
+    end
+    private
+    def puts_or_log(l, s)
+      if App.plugins.include? 'logging'
+        Log.send l, s
+      else
+        puts s
+        exit if l.to_sym == :fatal
       end
     end
   end
