@@ -10,7 +10,7 @@ module ErnieBrodeur
     	@options = {}
 
       @options[:utc] = true
-      @options[:level] = ::Logger::WARN
+      @options[:level] = ::Logger::DEBUG
       @options[:override_puts] = false
       @options[:filename] = STDOUT
 
@@ -37,12 +37,12 @@ module ErnieBrodeur
     end
 
     def level(s)
-      level = case s
-        when 'fatal' then ::Logger::FATAL
-        when 'error' then ::Logger::ERROR
-        when 'warn' then ::Logger::WARN
-        when 'info' then ::Logger::INFO
-        when 'debug' then ::Logger::DEBUG
+      level = case s.to_sym
+        when :fatal then ::Logger::FATAL
+        when :error then ::Logger::ERROR
+        when :warn then ::Logger::WARN
+        when :info then ::Logger::INFO
+        when :debug then ::Logger::DEBUG
         else ::Logger::UNKNOWN
       end
 
