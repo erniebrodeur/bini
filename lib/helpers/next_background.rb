@@ -52,5 +52,8 @@ module ErnieBrodeur
         end
       }
     end
+    def kill_daemon
+      App.kill_daemon
+    end
   end
 end
