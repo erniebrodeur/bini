@@ -25,15 +25,11 @@ module ErnieBrodeur
       "#{Dir.home}/.config/erniebrodeur/#{App.name}/"
     end
 
-    def running?
-      return true if Sys::ProcTable.ps.select{|x| x.cmdline =~ /.*#{App.name}.*-[dD].*/}.count >= 2
-      nil
-    end
-
-    def pids?
+    def pids
       a = Sys::ProcTable.ps.select{|x| x.cmdline =~ /.*#{App.name}.*-[dD].*/}.map {|x| x.pid}
       a.delete $$
-      a
+      return a if a.any?
+      nil
     end
 
     def initialize
@@ -44,8 +40,8 @@ module ErnieBrodeur
     end
 
     def daemonize(*params, &block)
-      if params[0] && !params[0][:multiple_pids] && running?
-        puts "#{App.name} appears to be running (#{pids?}), only one allowed, exiting."
+      if params[0] && !params[0][:multiple_pids] && pids
+        puts "#{App.name} appears to be running (#{pids}), only one allowed, exiting."
         exit
       end
       puts "Forking to background."
@@ -55,14 +51,14 @@ module ErnieBrodeur
     end
 
     def kill_daemon
-      if !running?
+      if !pids
         puts "No pids found, exiting."
         exit
       end
 
-      pids?.each do |p|
+      pids.each do |p|
         puts "Killing #{p}"
-        %x[kill -9 #{p}]
+        %x[kill -TERM #{p}]
       end
     end
   end
