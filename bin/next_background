@@ -9,14 +9,20 @@ require 'filemagic'
 
 include ErnieBrodeur
 include ErnieBrodeur::NextBackground
-ErnieBrodeur::Log.enable :override_puts
+r = false
+d = false
 
-App.version = "0.1.0"
+App.version = "0.2.0"
 App.banner = "This will change backgrounds based on a variety of rules."
 
-Options.on("-d", "--add-directory [DIRECTORY]", "Add a directory to the database.") { |dir| add_directory dir}
+Options.on("-a", "--add-directory [DIRECTORY]", "Add a directory to the database.") { |dir| add_directory dir}
 Options.on("-f", "--add-file [FILE]", "Add a file to the database.") {|file| add_file file}
-Options.on("-r", "--run-once", "Set the output file(s) a single time.") { run_once }
-Options.on("-d", "--daemonize", "Split into the background, changing every X interval.") {daemonize}
+Options.on("-r", "--run-once", "Set the output file(s) a single time.") { r = true}
+Options.on("-d", "--daemonize", "Split into the background, changing every X interval.") {d = true}
 Options.parse!
 Options.on_pry
+
+if __FILE__ == $0
+	run_once if r
+	daemonize if d
+end

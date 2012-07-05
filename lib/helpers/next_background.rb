@@ -2,7 +2,7 @@ module ErnieBrodeur
   module NextBackground
     def add_directory(dir)
       files = Dir.glob("#{dir}**/*").each do |file|
-        puts "Found #{files.count}, starting scanning . . . "
+        Log.info "Found #{files.count}, starting scanning . . . "
         add_file file
       end
     end
@@ -10,14 +10,14 @@ module ErnieBrodeur
     def add_file(file)
       # does it exist in the data base? if so return it
       if (f = ErnieBrodeur::Models::Image.find(file))
-        puts "File existed: #{file}"
+        Log.info "File existed: #{file}"
         return f
       end
       # Is our file an image?  if not, just return nil.
       if !ErnieBrodeur::is_image?(file)
-        puts "#Skipping file: #{file}"
+        Log.info "#Skipping file: #{file}"
       else
-        puts "Adding file: #{file}"
+        Log.info "Adding file: #{file}"
         begin
           ErnieBrodeur::Models::Image.create!(:filename => file, :md5sum => true)
         rescue
@@ -27,20 +27,20 @@ module ErnieBrodeur
 
     def run_once
       if !Config["output_files"]
-        puts 'Nothing configured! exiting.'
+        Log.info 'Nothing configured! exiting.'
         exit
       end
 
       @list = ErnieBrodeur::Models::Image.by_ratio.select {|i| i.ratio == 1.778} if !@list
       Config["output_files"].each do |f|
         File.delete f if File.symlink? f
-        puts "Deleted #{f}"
+        Log.info "Deleted #{f}"
 
         new_f = @list[Random.rand(@list.count)].filename
         File.symlink new_f, f
-        puts "Linked #{new_f} to #{f}"
+        Log.info "Linked #{new_f} to #{f}"
         %x[xfdesktop --reload]
-        puts "Reloaded xfce4."
+        Log.info "Reloaded xfce4."
       end
     end
 
