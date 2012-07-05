@@ -14,7 +14,8 @@ module ErnieBrodeur
         opts.on("-V", "--version", "Print version") { |version| @options[:version] = true}
         opts.on("-p", "--pry", "open a pry shell.") { |pry| @options[:pry] = true}
         if App.plugins.include? 'logging'
-          opts.on("-l", "--log-level LEVEL", "Change the log level, default is warn.") { |level| ErnieBrodeur::Log.level level }
+          opts.on("-l", "--log-level LEVEL", "Change the log level, default is debug.") { |level| ErnieBrodeur::Log.level level }
+          opts.on("--log-file FILE", "What file to output to, default is STDOUT") { |file| ErnieBrodeur::Log.filename file }
         end
       end
     end
