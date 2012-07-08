@@ -1,8 +1,9 @@
 module ErnieBrodeur
   module NextBackground
     def add_directory(dir)
-      files = Dir.glob("#{dir}**/*").each do |file|
-        Log.info "Found #{files.count}, starting scanning . . . "
+      files = Dir.glob("#{dir}**/*")
+      Log.info "Found #{files.count}, starting scanning . . . "
+      files.each do |file|
         add_file file
       end
     end
