@@ -11,15 +11,15 @@ Options.parse!
 
 require 'coderay'
 if __FILE__ == $0
-	if ARGV.empty?
-		puts 'you need to supply a list of filenames to cat to screen.'
-	else
-		ARGV.each do |f|
-			if File.exist? f
-				puts CodeRay.scan_file(f).terminal
-			else
-				puts "No such file: #{f}"
-			end
-		end
-	end
+  if ARGV.empty?
+    puts 'you need to supply a list of filenames to cat to screen.'
+  else
+    ARGV.each do |f|
+      if File.exist? f
+        puts CodeRay.scan_file(f).terminal
+      else
+        puts "No such file: #{f}"
+      end
+    end
+  end
 end

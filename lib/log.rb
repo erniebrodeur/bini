@@ -7,7 +7,7 @@ require 'logger'
 module ErnieBrodeur
   class Logger
     def initialize
-    	@options = {}
+      @options = {}
 
       @options[:utc] = true
       @options[:level] = ::Logger::DEBUG
@@ -27,7 +27,7 @@ module ErnieBrodeur
       @options[sym] = true
 
       if sym == :override_puts
-      	level ::Logger::DEBUG
+        level ::Logger::DEBUG
       end
     end
 
@@ -38,21 +38,21 @@ module ErnieBrodeur
 
     def level(s)
       level = case s.to_sym
-        when :fatal then ::Logger::FATAL
-        when :error then ::Logger::ERROR
-        when :warn then ::Logger::WARN
-        when :info then ::Logger::INFO
-        when :debug then ::Logger::DEBUG
-        else ::Logger::UNKNOWN
+      when :fatal then ::Logger::FATAL
+      when :error then ::Logger::ERROR
+      when :warn then ::Logger::WARN
+      when :info then ::Logger::INFO
+      when :debug then ::Logger::DEBUG
+      else ::Logger::UNKNOWN
       end
 
-    	@options[:level] = level
-    	@l.level = level
+      @options[:level] = level
+      @l.level = level
     end
 
     def override_puts?
-    	return true if @options[:override_puts]
-    	false
+      return true if @options[:override_puts]
+      false
     end
 
     def filename(file)
@@ -87,10 +87,10 @@ end
 # better way to do this with: Kernel.module_eval def puts ...
 module Kernel
   def puts (s)
-  	if ErnieBrodeur::Log.override_puts?
-    	ErnieBrodeur::Log.info s
+    if ErnieBrodeur::Log.override_puts?
+      ErnieBrodeur::Log.info s
     else
-    	Kernel::puts s
+      Kernel::puts s
     end
   end
 end

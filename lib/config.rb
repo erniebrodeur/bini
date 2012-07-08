@@ -5,7 +5,7 @@ module ErnieBrodeur
     BaseDir = "/home/ebrodeur/.config/erniebrodeur"
 
     def initialize
-    	FileUtils.mkdir_p BaseDir if !Dir.exist? BaseDir
+      FileUtils.mkdir_p BaseDir if !Dir.exist? BaseDir
       load
     end
 
@@ -14,13 +14,13 @@ module ErnieBrodeur
     end
 
     def save
-    	if any?
-    		# I do this the long way because I want an immediate sync.
-    		f = open(file, 'w')
-    		f.write Yajl.dump self
-    		f.sync
-    		f.close
-   		end
+      if any?
+        # I do this the long way because I want an immediate sync.
+        f = open(file, 'w')
+        f.write Yajl.dump self
+        f.sync
+        f.close
+      end
     end
 
     def save!
@@ -29,9 +29,9 @@ module ErnieBrodeur
     end
 
     def load
-    	if File.exist? self.file
-      	h = Yajl.load open(file, 'r').read
-        self.update h
+      if File.exist? self.file
+        h = Yajl.load open(file, 'r').read
+        h.each { |k,v| self[k.to_sym] = v}
       end
     end
   end

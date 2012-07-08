@@ -12,24 +12,24 @@ Options.parse!
 require 'yajl'
 
 def process_input(s)
-	puts Yajl.dump(Yajl.load(s), {:pretty => true})
+  puts Yajl.dump(Yajl.load(s), {:pretty => true})
 end
 
 if __FILE__ == $0
-	if ARGV.empty?
-		begin
-			puts process_input STDIN
-		rescue Exception => e
-			puts e.message
-			exit
-		end
-	else
-		ARGV.each do |f|
-			if File.exist? f
-				process_input open(f).read
-			else
-				puts "No such file: #{f}"
-			end
-		end
-	end
+  if ARGV.empty?
+    begin
+      puts process_input STDIN
+    rescue Exception => e
+      puts e.message
+      exit
+    end
+  else
+    ARGV.each do |f|
+      if File.exist? f
+        process_input open(f).read
+      else
+        puts "No such file: #{f}"
+      end
+    end
+  end
 end

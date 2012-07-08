@@ -58,22 +58,22 @@ module ErnieBrodeur
       pids.each do |p|
         puts_or_log :info, "Killing #{p}"
         %x[kill -TERM #{p}]
-      end
-    end
-    private
-    def puts_or_log(l, s)
-      if App.plugins.include? 'logging'
-        Log.send l, s
-      else
-        puts s
-        exit if l.to_sym == :fatal
-      end
-    end
-  end
+           end
+           end
+           private
+           def puts_or_log(l, s)
+             if App.plugins.include? 'logging'
+               Log.send l, s
+             else
+               puts s
+               exit if l.to_sym == :fatal
+             end
+           end
+           end
 
-  App = Application.new
+           App = Application.new
 
-  # This will load a helper, if it exists.
-  f = "#{$:.last}/helpers/#{App.name}.rb"
-  require f if File.exist? f
-end
+           # This will load a helper, if it exists.
+           f = "#{$:.last}/helpers/#{App.name}.rb"
+           require f if File.exist? f
+           end

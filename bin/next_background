@@ -25,7 +25,7 @@ Options.parse!
 Options.on_pry
 
 if __FILE__ == $0
-	run_once if r
-	daemonize if d
-	kill_daemon if k
+  run_once if r
+  daemonize if d
+  kill_daemon if k
 end
