@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module ErnieBrodeur
   class ConfigBlob
     BaseDir = "/home/ebrodeur/.config/erniebrodeur"
@@ -21,6 +23,11 @@ module ErnieBrodeur
     		f.sync
     		f.close
    		end
+    end
+
+    def save!
+      FileUtils.rm file if File.file? file
+      save
     end
 
     def load
