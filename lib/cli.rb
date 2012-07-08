@@ -58,6 +58,14 @@ module ErnieBrodeur
         puts ErnieBrodeur::App.version
         exit 0
       end
+
+      # we need to mash in our config array.  To do this we want to make config
+      # options that don't overwrite cli options.
+      if App.plugins.include? 'config'
+        Config.each do |k,v|
+          @options[k] = v if !@options[k]
+        end
+      end
     end
 
     def on_pry
