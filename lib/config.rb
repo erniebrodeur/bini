@@ -1,10 +1,8 @@
 require 'fileutils'
 
 module ErnieBrodeur
-  class ConfigBlob
+  class ConfigBlob < Hash
     BaseDir = "/home/ebrodeur/.config/erniebrodeur"
-
-    attr_accessor :configuration
 
     def initialize
     	FileUtils.mkdir_p BaseDir if !Dir.exist? BaseDir
@@ -16,10 +14,10 @@ module ErnieBrodeur
     end
 
     def save
-    	if @configuration.any?
+    	if any?
     		# I do this the long way because I want an immediate sync.
     		f = open(file, 'w')
-    		f.write Yajl.dump @configuration
+    		f.write Yajl.dump self
     		f.sync
     		f.close
    		end
@@ -32,22 +30,9 @@ module ErnieBrodeur
 
     def load
     	if File.exist? self.file
-      	@configuration = Yajl.load open(file, 'r').read
-      else
-      	@configuration = {}
+      	h = Yajl.load open(file, 'r').read
+        self.update h
       end
-    end
-
-    def [](k)
-    	@configuration[k]
-    end
-
-    def []=(k,v)
-    	@configuration[k] = v
-    end
-
-    def to_s
-    	@configuration.to_s
     end
   end
   App.plugins.push 'config'
