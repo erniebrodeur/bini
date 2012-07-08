@@ -69,6 +69,7 @@ module ErnieBrodeur
     end
 
     def create_logger
+      FileUtils.mkdir_p File.dirname @options[:filename] if File.file? @options[:filename]
       @l = ::Logger.new(@options[:filename])
       @l.level = @options[:level]
 
