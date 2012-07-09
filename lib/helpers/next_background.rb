@@ -27,13 +27,13 @@ module ErnieBrodeur
     end
 
     def run_once
-      if !Config["output_files"]
+      if !Config[:output_files]
         Log.info 'Nothing configured! exiting.'
         exit
       end
 
       @list = ErnieBrodeur::Models::Image.by_ratio.select {|i| i.ratio == 1.778} if !@list
-      Config["output_files"].each do |f|
+      Config[:output_files].each do |f|
         File.delete f if File.symlink? f
         Log.info "Deleted #{f}"
 
