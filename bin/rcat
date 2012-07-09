@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
 require 'app'
-require 'cli'
+require 'optparser'
 include ErnieBrodeur
 
 App.banner = "Usage: Use ruby to cat a file and produce colored output."

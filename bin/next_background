@@ -2,9 +2,9 @@
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
 require 'app'
 require 'log'
-require 'cli'
-require 'couch'
 require 'config'
+require 'optparser'
+require 'couch'
 require 'filemagic'
 
 include ErnieBrodeur
