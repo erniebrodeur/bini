@@ -3,8 +3,8 @@ require 'optparse'
 module ErnieBrodeur
   class OptionParser < ::OptionParser
     def initialize
-      @options = {}
       super
+      @options = {}
 
       on("-V", "--version", "Print version") { |version| @options[:version] = true}
       on("-p", "--pry", "open a pry shell.") { |pry| @options[:pry] = true}
@@ -45,6 +45,14 @@ module ErnieBrodeur
         require 'pry'
         binding.pry
       end
+    end
+
+    def [](k)
+      @options[k]
+    end
+
+    def []=(k,v)
+      @options[k] = v
     end
   end
 
