@@ -13,5 +13,5 @@ end
 
 # since we have to have a specific order, lets just make a word list real quick.
 %w{file image}.each do |f|
-  require "/home/ebrodeur/Projects/bin_snippets/lib/models/#{f}"
+  require "/home/ebrodeur/Projects/bin_snippets/lib/couch_models/#{f}"
 end
