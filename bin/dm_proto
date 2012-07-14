@@ -1,0 +1,35 @@
+#!/usr/bin/ruby
+$:.push '/home/ebrodeur/Projects/bin_snippets/lib'
+require 'app'
+require 'optparser'
+require 'dm'
+
+include ErnieBrodeur
+
+App.banner = "This is to help me protoype out dm.rb, for now, it indexes pictures."
+App.version = "0.1.0"
+
+Options.parse!
+
+
+def index_file(filename)
+  @file = DM::Models::File.first_or_new(:filename => filename)
+  @file.gen_md5
+  @file.save!
+end
+
+if __FILE__ == $0
+  Options.on_pry
+
+  if ARGV.empty?
+    puts 'you need to supply a list of filenames to index.'
+  else
+    ARGV.each do |f|
+      if File.exist? f
+        index_file ::File.absolute_path f
+      else
+        puts "No such file: #{f}"
+      end
+    end
+  end
+end
