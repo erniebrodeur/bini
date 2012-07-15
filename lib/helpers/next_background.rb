@@ -9,7 +9,7 @@ module ErnieBrodeur
     end
 
     def add_file(filename)
-      @file = ErnieBrodeur::DM::Models::Image.first_or_new(:filename => filename)
+      @file = ErnieBrodeur::DM::Models::Image.first_or_new(:filename => ::File.absolute_path(filename))
       @file.gen_md5
       @file.save
     end
