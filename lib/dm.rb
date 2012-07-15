@@ -1,5 +1,4 @@
 require 'data_mapper'
-require 'dm-types'
 
 module ErnieBrodeur
   module DM
@@ -12,8 +11,8 @@ module ErnieBrodeur
   		DataMapper::Logger.new($stdout, :debug)
    		DataMapper.setup(:default, "sqlite://#{db_path}")
 
-			%w{file}.each do |f|
-			  require "models/dm/#{f}"
+			%w{file image}.each do |f|
+			  require "/home/ebrodeur/Projects/bin_snippets/lib/models/dm/#{f}.rb"
 			end
 
 			DataMapper.auto_upgrade!
@@ -22,4 +21,12 @@ module ErnieBrodeur
    	self.initialize
   end
   App.plugins.push 'dm'
+end
+
+module DataMapper
+	class Collection
+		def rand
+			all[Random.rand(all.count)]
+		end
+	end
 end
