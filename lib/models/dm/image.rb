@@ -24,7 +24,7 @@ module ErnieBrodeur
             self.height = i[:height]
             self.format = i[:type]
             self.transparency = i[:transparency] == "True" ? true : false
-            self.ratio = (width / height).round 3
+            self.ratio = (width / height)
           end
         end
 

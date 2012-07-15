@@ -1,3 +1,5 @@
+require 'mixins'
+
 module ErnieBrodeur
   module NextBackground
     def add_directory(dir)
@@ -23,7 +25,9 @@ module ErnieBrodeur
       Config[:output_files].each do |f|
         File.delete f if File.symlink? f
         Log.info "Deleted #{f}"
-        new_f = ErnieBrodeur::DM::Models::Image.all(:fields => [:filename, :ratio], :ratio => 1.778).rand.filename
+        # I get back everything here, I'm more interested in accurate results.
+        # also, I rationalize the number to 'scrub' near-like floats into the same known ratios, ie: 16/9, 4/3.
+        new_f = ErnieBrodeur::DM::Models::Image.all(:fields => [:filename, :ratio]).select{ |x| x.ratio.rationalize(0.01) == 1.77.rationalize(0.01)}.rand.filename
         File.symlink new_f, f
         Log.info "Linked #{new_f} to #{f}"
         %x[xfdesktop --reload]
@@ -41,6 +45,13 @@ module ErnieBrodeur
     end
     def kill_daemon
       App.kill_daemon
+    end
+
+    def stats
+      e = ErnieBrodeur::DM::Models::Image.all
+
+      sizes = e.map{|x| x.ratio}.uniq.sort
+
     end
   end
 end
