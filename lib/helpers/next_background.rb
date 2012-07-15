@@ -8,22 +8,10 @@ module ErnieBrodeur
       end
     end
 
-    def add_file(file)
-      # does it exist in the data base? if so return it
-      if (f = ErnieBrodeur::Models::Image.find(file))
-        Log.info "File existed: #{file}"
-        return f
-      end
-      # Is our file an image?  if not, just return nil.
-      if !ErnieBrodeur::is_image?(file)
-        Log.info "#Skipping file: #{file}"
-      else
-        Log.info "Adding file: #{file}"
-        begin
-          ErnieBrodeur::Models::Image.create!(:filename => file, :md5sum => true)
-        rescue
-        end
-      end
+    def add_file(filename)
+      @file = ErnieBrodeur::DM::Models::Image.first_or_new(:filename => filename)
+      @file.gen_md5
+      @file.save
     end
 
     def run_once
@@ -32,12 +20,10 @@ module ErnieBrodeur
         exit
       end
 
-      @list = ErnieBrodeur::Models::Image.by_ratio.select {|i| i.ratio == 1.778} if !@list
       Config[:output_files].each do |f|
         File.delete f if File.symlink? f
         Log.info "Deleted #{f}"
-
-        new_f = @list[Random.rand(@list.count)].filename
+        new_f = ErnieBrodeur::DM::Models::Image.all(:fields => [:filename, :ratio], :ratio => 1.778).rand.filename
         File.symlink new_f, f
         Log.info "Linked #{new_f} to #{f}"
         %x[xfdesktop --reload]
