@@ -3,6 +3,7 @@ $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
 require 'app'
 require 'optparser'
 require 'dm'
+require 'filemagic'
 
 include ErnieBrodeur
 
@@ -13,9 +14,9 @@ Options.parse!
 
 
 def index_file(filename)
-  @file = DM::Models::File.first_or_new(:filename => filename)
+  @file = DM::Models::Image.first_or_new(:filename => filename)
   @file.gen_md5
-  @file.save!
+  @file.save
 end
 
 if __FILE__ == $0
