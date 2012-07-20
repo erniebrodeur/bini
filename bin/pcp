@@ -4,39 +4,82 @@ require 'progress_bar'
 require 'fileutils'
 require 'sys/proctable'
 
-@src = '/mnt/v/zeros'
-@dst = '/mnt/v/zeros2'
-puts ARGV
-
 def size(filename)
 	return File.stat(filename).size / 1000000 if File.exist? filename
 	return 0
 end
 
-def print_bar
-	@bar.count = size(@dst)
-	@bar.write
+def print_bar(dst)
+	#@bar.count = size(dst)
+	#@bar.write
 end
 
-def print_header
-	puts "#{@src} -> #{@dst}"
-end
 
 def running?(pid)
 	return true if Sys::ProcTable.ps pid
 	false
 end
 
-@bar = ProgressBar.new(size(@src))
-pid = fork { FileUtils.cp @src, @dst}
-Process.detach pid
+def pcp(src, dst)
+	if !File.exist? src
+		puts "No such file #{src}"
+		exit
+	end
 
-print_header
+	if File.directory? src
+		files = Dir.glob("#{src}/*").reverse
+		files.each { |x| pcp x, dst }
+	end
 
-while running? pid
-	break if size(@src) == size(@dst)
-	print_bar
-	sleep 0.1
+	@bar = ProgressBar.new(size(src))
+
+	puts "#{src} -> #{dst}"
+	Process.waitall
+	pid = fork { FileUtils.cp src, dst}
+
+	while running? pid
+		break if size(src) == size(dst)
+		print_bar dst
+		sleep 0.1
+	end
+	print_bar dst
 end
-print_bar
 
+def unroll_filelist(array)
+	output = []
+ 	array.each do |i|
+ 		if !File.exist? i
+ 			return "No such file #{i}"
+ 			exit
+ 		else
+ 			if File.directory? i
+ 				output += Dir.glob("#{i}/**/*")
+ 			else
+ 				output.push i
+ 			end
+ 		end
+ 	end
+ 	output.select {|x| !File.directory? x}
+
+end
+
+if __FILE__ == $0
+	if ARGV.count == 0
+		puts "Please supply a file list to copy."
+		exit
+	end
+
+	if ARGV.count == 1
+		puts "You must supply a destination."
+		exit
+	end
+	dst = ARGV.pop
+	FileUtils.mkdir_p dst if !File.exist? dst
+	#files = unroll_filelist ARGV
+
+	ARGV.each do |f|
+		#puts "#{f} -> #{dst}"
+		pcp f, dst
+	end
+	Process.waitall
+end
