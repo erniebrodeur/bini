@@ -5,13 +5,8 @@ require 'fileutils'
 require 'sys/proctable'
 
 def size(filename)
-	return File.stat(filename).size / 1000000 if File.exist? filename
+	return File.stat(filename).size if File.exist? filename
 	return 0
-end
-
-def print_bar(dst)
-	#@bar.count = size(dst)
-	#@bar.write
 end
 
 
@@ -20,47 +15,38 @@ def running?(pid)
 	false
 end
 
+def print_bar(bar, size)
+	bar.count = size
+	bar.write if bar.max > 0
+end
+
 def pcp(src, dst)
-	if !File.exist? src
-		puts "No such file #{src}"
-		exit
-	end
-
-	if File.directory? src
-		files = Dir.glob("#{src}/*").reverse
-		files.each { |x| pcp x, dst }
-	end
-
-	@bar = ProgressBar.new(size(src))
+	bar = ProgressBar.new(size(src))
 
 	puts "#{src} -> #{dst}"
 	Process.waitall
+	FileUtils.mkdir_p File.dirname dst
 	pid = fork { FileUtils.cp src, dst}
 
 	while running? pid
 		break if size(src) == size(dst)
-		print_bar dst
+		print_bar bar, size(dst)
 		sleep 0.1
 	end
-	print_bar dst
+	print_bar bar, size(dst)
 end
 
-def unroll_filelist(array)
-	output = []
- 	array.each do |i|
- 		if !File.exist? i
- 			return "No such file #{i}"
- 			exit
- 		else
- 			if File.directory? i
- 				output += Dir.glob("#{i}/**/*")
- 			else
- 				output.push i
- 			end
- 		end
- 	end
- 	output.select {|x| !File.directory? x}
-
+def all_files(list)
+	files = []
+	list.each do |f|
+		next if !File.exist? f
+		if File.directory? f
+			files += all_files Dir.glob("#{f}/*")
+		else
+			files.push f
+		end
+	end
+	files
 end
 
 if __FILE__ == $0
@@ -74,12 +60,22 @@ if __FILE__ == $0
 		exit
 	end
 	dst = ARGV.pop
-	FileUtils.mkdir_p dst if !File.exist? dst
-	#files = unroll_filelist ARGV
 
-	ARGV.each do |f|
-		#puts "#{f} -> #{dst}"
-		pcp f, dst
+	files = all_files ARGV
+
+	if files.count == 1
+		pcp files[0], dst
+	else
+		if !File.exist? dst
+			targets = files.map { |x| [x, "#{dst}/#{x[x.index("/")+1..-1]}"]}
+		else
+			targets = files.map { |x| [x, "#{dst}/#{x}"]}
+		end
 	end
+
+	targets.each do |s, d|
+		pcp s, d
+	end if targets
+
 	Process.waitall
 end
