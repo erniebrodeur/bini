@@ -1,0 +1,42 @@
+#!/usr/bin/ruby
+# progress bar/colorized cp for long ass moves on the cli.
+require 'progress_bar'
+require 'fileutils'
+require 'sys/proctable'
+
+@src = '/mnt/v/zeros'
+@dst = '/mnt/v/zeros2'
+puts ARGV
+
+def size(filename)
+	return File.stat(filename).size / 1000000 if File.exist? filename
+	return 0
+end
+
+def print_bar
+	@bar.count = size(@dst)
+	@bar.write
+end
+
+def print_header
+	puts "#{@src} -> #{@dst}"
+end
+
+def running?(pid)
+	return true if Sys::ProcTable.ps pid
+	false
+end
+
+@bar = ProgressBar.new(size(@src))
+pid = fork { FileUtils.cp @src, @dst}
+Process.detach pid
+
+print_header
+
+while running? pid
+	break if size(@src) == size(@dst)
+	print_bar
+	sleep 0.1
+end
+print_bar
+
