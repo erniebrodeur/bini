@@ -4,9 +4,9 @@ module ErnieBrodeur
   class ConfigBlob < Hash
     BaseDir = "/home/ebrodeur/.config/erniebrodeur"
 
-    def initialize
+    def initialize(load = true)
       FileUtils.mkdir_p BaseDir if !Dir.exist? BaseDir
-      load
+      load if load
     end
 
     def file
