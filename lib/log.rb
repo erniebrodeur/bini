@@ -71,7 +71,8 @@ module ErnieBrodeur
     def create_logger
       if @options[:filename] != STDOUT && !File.file?(@options[:filename])
         FileUtils.mkdir_p File.dirname @options[:filename]
-      end      @l = ::Logger.new(@options[:filename])
+      end
+      @l = ::Logger.new(@options[:filename])
       @l.level = @options[:level]
 
       @l.formatter = proc do |severity, datetime, progname, msg|
