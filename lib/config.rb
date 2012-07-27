@@ -6,7 +6,7 @@ module ErnieBrodeur
 
     def initialize(load = true)
       FileUtils.mkdir_p BaseDir if !Dir.exist? BaseDir
-      load if load
+      self.load if load
     end
 
     def file
