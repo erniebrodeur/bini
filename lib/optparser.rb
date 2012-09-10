@@ -47,8 +47,10 @@ module ErnieBrodeur
       end
     end
 
-    def [](k)
-      @options[k]
+    def [](k = nil)
+      return @options[k] if k
+      return @options if @options.any?
+      nil
     end
 
     def []=(k,v)
