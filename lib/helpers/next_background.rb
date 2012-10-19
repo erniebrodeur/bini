@@ -27,7 +27,7 @@ module ErnieBrodeur
         Log.info "Deleted #{f}"
         # I get back everything here, I'm more interested in accurate results.
         # also, I rationalize the number to 'scrub' near-like floats into the same known ratios, ie: 16/9, 4/3.
-        new_f = ErnieBrodeur::DM::Models::Image.all(:fields => [:filename, :ratio]).select{ |x| x.ratio.rationalize(0.01) == 1.77.rationalize(0.01)}.rand.filename
+        new_f = ErnieBrodeur::DM::Models::Image.all(:fields => [:filename, :ratio]).select{ |x| x.ratio.rationalize(0.01) == 0.5625.rationalize(0.01)}.rand.filename
         File.symlink new_f, f
         Log.info "Linked #{new_f} to #{f}"
         %x[xfdesktop --reload]

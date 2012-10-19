@@ -12,20 +12,22 @@ include ErnieBrodeur::NextBackground
 App.version = "0.2.0"
 App.banner = "This will change backgrounds based on a variety of rules."
 
-r = false
-d = false
-k = false
+Options[:run_once] = false
+Options[:daemonize] = false
+Options[:kill_daemon] = false
+Options[:ratio] = 1.77
 
 Options.on("-a", "--add-directory [DIRECTORY]", "Add a directory to the database.") { |dir| add_directory dir}
 Options.on("-f", "--add-file [FILE]", "Add a file to the database.") {|file| add_file file}
-Options.on("-r", "--run-once", "Set the output file(s) a single time.") { r = true}
-Options.on("-d", "--daemonize", "Split into the background, changing every X interval.") {d = true}
-Options.on("-k", "--kill-daemon", "Kill any existing daemon.") {k = true}
+Options.on("-r", "--run-once", "Set the output file(s) a single time.") { Options[:run_once] = true}
+Options.on("-d", "--daemonize", "Split into the background, changing every X interval.") {Options[:daemonize] = true}
+Options.on("-k", "--kill-daemon", "Kill any existing daemon.") {Options[:kill_daemon] = true}
+Options.on("--ratio [RATIO]", "Select the ratio to search for.") {|r| Options[:ratio] = r}
 Options.parse!
 Options.on_pry
 
 if __FILE__ == $0
-  run_once if r
-  daemonize if d
-  kill_daemon if k
+  run_once if Options[:run_once]
+  daemonize if Options[:daemonize]
+  kill_daemon if Options[:kill_daemon]
 end
