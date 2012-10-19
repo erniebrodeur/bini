@@ -1,9 +1,3 @@
 source 'https://rubygems.org'
 
-gem 'coderay'
-gem 'couchrest'
-gem 'couchrest_model'
-gem 'yajl-ruby'
-gem 'datamapper'
-gem 'dm-sqlite-adapter'
-gem 'dm-types'
+gemspec

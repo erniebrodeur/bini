@@ -8,12 +8,19 @@ Gem::Specification.new do |gem|
   gem.version       = Bini::VERSION
   gem.authors       = ["Ernie Brodeur"]
   gem.email         = ["ebrodeur@ujami.net"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = "Bini needs no description."
+  gem.summary       = "No really, it doesn't."
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+  gem.add_runtime_dependency "coderay"
+  gem.add_runtime_dependency "couchrest"
+  gem.add_runtime_dependency "couchrest_model"
+  gem.add_runtime_dependency "yajl-ruby"
+  gem.add_runtime_dependency "datamapper"
+  gem.add_runtime_dependency "dm-types"
+  gem.add_runtime_dependency "dm-sqlite-adapter"
 end
