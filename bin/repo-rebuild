@@ -1,0 +1,10 @@
+#!/usr/bin/ruby
+
+
+file = ARGV[0]
+
+puts `makepkg` if (file && !File.exist?(file))
+puts `mv #{file}*.xz /Archives/arch/repo/x86_64/` if file
+puts `repo-add /Archives/arch/repo/x86_64/moya.db.tar.gz /Archives/arch/repo/x86_64/#{file}*.xz`
+puts `repo-add -f /Archives/arch/repo/x86_64/moya-files.db.tar.gz /Archives/arch/repo/x86_64/#{file}*.xz`
+#puts `sudo pacman-color -Sy --noconfirm #{file}` if file
