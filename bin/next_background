@@ -1,11 +1,10 @@
 #!/usr/bin/ruby
-$:.push '/home/ebrodeur/Projects/bin_snippets/lib'
-require 'app'
-require 'log'
-require 'config'
-require 'optparser'
-require 'dm'
-require 'filemagic'
+require 'bini/app'
+require 'bini/log'
+require 'bini/config'
+require 'bini/optparser'
+require 'bini/filemagic'
+require "dm-core"
 
 include Bini
 include Bini::NextBackground

@@ -1,5 +1,3 @@
-$:.push '/home/ebrodeur/Projects/bin_snippets/lib'
-
 # Some requires, they don't fit elsewhere.
 require 'yajl'
 require 'sys/proctable'
@@ -73,7 +71,10 @@ module Bini
 
   App = Application.new
 
-  # This will load a helper, if it exists.
-  f = "#{$:.last}/helpers/#{App.name}.rb"
-  require f if File.exist? f
+  # Try to load a helper, 'rescue' if it isn't there.
+  begin
+    require "bini/helpers/#{App.name}.rb"
+  rescue LoadError => e
+    puts e
+  end
 end

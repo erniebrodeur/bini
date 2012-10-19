@@ -21,6 +21,9 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "couchrest_model"
   gem.add_runtime_dependency "yajl-ruby"
   gem.add_runtime_dependency "datamapper"
+  gem.add_runtime_dependency "datamapper"
   gem.add_runtime_dependency "dm-types"
   gem.add_runtime_dependency "dm-sqlite-adapter"
+  gem.add_runtime_dependency "sys-proctable"
+  gem.add_runtime_dependency "pry"
 end

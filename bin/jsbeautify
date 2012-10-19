@@ -1,15 +1,16 @@
 #!/usr/bin/ruby
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
-require 'app'
-require 'optparser'
+require 'yajl'
+
+require 'bini/app'
+require 'bini/optparser'
+
 include Bini
 
 App.version = "0.9.0"
 App.banner = "Usage: print json into a pretty format, or break trying."
 
 Options.parse!
-
-require 'yajl'
 
 def process_input(s)
   puts Yajl.dump(Yajl.load(s), {:pretty => true})

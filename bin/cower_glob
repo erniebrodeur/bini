@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
-require 'app'
-require 'optparser'
+require 'bini/app'
+require 'bini/optparser'
 include Bini
 
 App.version = "0.9.0"

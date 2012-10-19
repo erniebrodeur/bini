@@ -1,4 +1,4 @@
-require 'mixins'
+require 'bini/mixins'
 
 module Bini
   module NextBackground
