@@ -7,8 +7,8 @@ require 'optparser'
 require 'dm'
 require 'filemagic'
 
-include ErnieBrodeur
-include ErnieBrodeur::NextBackground
+include Bini
+include Bini::NextBackground
 App.version = "0.2.0"
 App.banner = "This will change backgrounds based on a variety of rules."
 

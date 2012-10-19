@@ -1,6 +1,6 @@
 require 'digest/md5'
 
-module ErnieBrodeur
+module Bini
   module DM
     module Models
       class File

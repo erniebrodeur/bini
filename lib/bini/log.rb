@@ -4,7 +4,7 @@
 # it should produce colorized output (either parsed or part of the file format)
 require 'logger'
 
-module ErnieBrodeur
+module Bini
   class Logger
     def initialize
       @options = {}
@@ -83,14 +83,14 @@ module ErnieBrodeur
   end
 
   App.plugins.push 'logging'
-  Log = ErnieBrodeur::Logger.new
+  Log = Bini::Logger.new
 end
 
 # better way to do this with: Kernel.module_eval def puts ...
 module Kernel
   def puts (s)
-    if ErnieBrodeur::Log.override_puts?
-      ErnieBrodeur::Log.info s
+    if Bini::Log.override_puts?
+      Bini::Log.info s
     else
       Kernel::puts s
     end

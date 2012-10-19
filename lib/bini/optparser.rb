@@ -1,6 +1,6 @@
 require 'optparse'
 
-module ErnieBrodeur
+module Bini
   class OptionParser < ::OptionParser
     def initialize
       super
@@ -9,8 +9,8 @@ module ErnieBrodeur
       on("-V", "--version", "Print version") { |version| @options[:version] = true}
       on("-p", "--pry", "open a pry shell.") { |pry| @options[:pry] = true}
       if App.plugins.include? 'logging'
-        on("-l", "--log-level LEVEL", "Change the log level, default is debug.") { |level| ErnieBrodeur::Log.level level }
-        on("--log-file FILE", "What file to output to, default is STDOUT") { |file| ErnieBrodeur::Log.filename file }
+        on("-l", "--log-level LEVEL", "Change the log level, default is debug.") { |level| Bini::Log.level level }
+        on("--log-file FILE", "What file to output to, default is STDOUT") { |file| Bini::Log.filename file }
       end
     end
 
@@ -23,11 +23,11 @@ module ErnieBrodeur
     end
 
     def parse!
-      @banner = ErnieBrodeur::App.banner
+      @banner = Bini::App.banner
       super
 
       if @options[:version]
-        puts ErnieBrodeur::App.version
+        puts Bini::App.version
         exit 0
       end
 

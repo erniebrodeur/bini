@@ -2,7 +2,7 @@
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
 require 'app'
 require 'optparser'
-include ErnieBrodeur
+include Bini
 
 App.version = "0.9.0"
 App.banner = "Usage: cower_glob [options] search string"

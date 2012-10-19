@@ -1,6 +1,6 @@
 require 'data_mapper'
 
-module ErnieBrodeur
+module Bini
   module DM
   	def self.db_path
   		# TODO not hardcode this.

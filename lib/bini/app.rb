@@ -3,7 +3,7 @@ $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
 # Some requires, they don't fit elsewhere.
 require 'yajl'
 require 'sys/proctable'
-module ErnieBrodeur
+module Bini
 
   class Application
     attr_accessor :version

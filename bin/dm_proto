@@ -5,7 +5,7 @@ require 'optparser'
 require 'dm'
 require 'filemagic'
 
-include ErnieBrodeur
+include Bini
 
 App.banner = "This is to help me protoype out dm.rb, for now, it indexes pictures."
 App.version = "0.1.0"

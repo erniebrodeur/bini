@@ -1,7 +1,7 @@
-module ErnieBrodeur
+module Bini
   module DM
     module Models
-      class Image < ErnieBrodeur::DM::Models::File
+      class Image < Bini::DM::Models::File
         self.raise_on_save_failure = true
 
         property :width,        Float
@@ -17,7 +17,7 @@ module ErnieBrodeur
         end
 
         def gen_image
-          i = ErnieBrodeur::DM::Models::image_info filename
+          i = Bini::DM::Models::image_info filename
 
           if i
             self.width = i[:width]
@@ -31,13 +31,13 @@ module ErnieBrodeur
       end
 
       def self.random_image
-        ErnieBrodeur::DM::Models::File.all[Random.rand(ErnieBrodeur::DM::Models::File.all.count)]
+        Bini::DM::Models::File.all[Random.rand(Bini::DM::Models::File.all.count)]
       end
 
       # Use image magick to determine the basic properties of the image.
       def self.image_info(filename)
         return nil if !::File.exist? filename
-        return nil if !ErnieBrodeur::DM::Models.is_image? filename
+        return nil if !Bini::DM::Models.is_image? filename
 
         #TODO not have this unrolled, make it more dynamic.
         width, height, type, transparency =  %x[identify -ping -format '%w %h %m %A' '#{filename}'].split

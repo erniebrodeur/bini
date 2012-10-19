@@ -1,7 +1,7 @@
 require 'couchrest_model'
 require 'digest/md5'
 
-module ErnieBrodeur
+module Bini
   module Couch
     DB = CouchRest.database! "http://localhost:5984/#{App.name}"
   end

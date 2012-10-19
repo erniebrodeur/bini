@@ -1,8 +1,8 @@
-module ErnieBrodeur
+module Bini
   module Models
     # You must always supply the filename.
-    class Image < ErnieBrodeur::Models::File
-      use_database ErnieBrodeur::Couch::DB
+    class Image < Bini::Models::File
+      use_database Bini::Couch::DB
 
       property :width,        Float
       property :height,       Float
@@ -28,7 +28,7 @@ module ErnieBrodeur
       end
 
       def gen_image
-        i = ErnieBrodeur::image_info filename
+        i = Bini::image_info filename
 
         if i
           self.width = i[:width]
@@ -43,14 +43,14 @@ module ErnieBrodeur
   end
 
   def self.random_image
-    r = Random.rand(ErnieBrodeur::Models::Image.count)
-    ErnieBrodeur::Models::Image.all.skip(r).limit(1).all
+    r = Random.rand(Bini::Models::Image.count)
+    Bini::Models::Image.all.skip(r).limit(1).all
   end
 
   # Use image magick to determine the basic properties of the image.
   def self.image_info(filename)
     return nil if !File.exist? filename
-    return nil if !ErnieBrodeur.is_image? filename
+    return nil if !Bini.is_image? filename
 
     #TODO not have this unrolled, make it more dynamic.
     width, height, type, transparency =  %x[identify -ping -format '%w %h %m %A' '#{filename}'].split

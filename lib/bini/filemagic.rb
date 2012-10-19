@@ -1,4 +1,4 @@
-module ErnieBrodeur
+module Bini
   # Add some basic filemagic types.
   class FileMagic
     def self.mime_type(file)

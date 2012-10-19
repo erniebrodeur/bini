@@ -1,8 +1,8 @@
-module ErnieBrodeur
+module Bini
   module Models
     # You must always supply the filename.
     class File < CouchRest::Model::Base
-      use_database ErnieBrodeur::Couch::DB
+      use_database Bini::Couch::DB
 
       property :_id, String, :alias => :filename
       property :mtime,   Time

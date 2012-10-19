@@ -1,6 +1,6 @@
 require 'mixins'
 
-module ErnieBrodeur
+module Bini
   module NextBackground
     def add_directory(dir)
       files = Dir.glob("#{dir}**/*")
@@ -11,7 +11,7 @@ module ErnieBrodeur
     end
 
     def add_file(filename)
-      @file = ErnieBrodeur::DM::Models::Image.first_or_new(:filename => ::File.absolute_path(filename))
+      @file = Bini::DM::Models::Image.first_or_new(:filename => ::File.absolute_path(filename))
       @file.gen_md5
       @file.save
     end
@@ -27,7 +27,7 @@ module ErnieBrodeur
         Log.info "Deleted #{f}"
         # I get back everything here, I'm more interested in accurate results.
         # also, I rationalize the number to 'scrub' near-like floats into the same known ratios, ie: 16/9, 4/3.
-        new_f = ErnieBrodeur::DM::Models::Image.all(:fields => [:filename, :ratio]).select{ |x| x.ratio.rationalize(0.01) == 0.5625.rationalize(0.01)}.rand.filename
+        new_f = Bini::DM::Models::Image.all(:fields => [:filename, :ratio]).select{ |x| x.ratio.rationalize(0.01) == 0.5625.rationalize(0.01)}.rand.filename
         File.symlink new_f, f
         Log.info "Linked #{new_f} to #{f}"
         %x[xfdesktop --reload]
@@ -48,7 +48,7 @@ module ErnieBrodeur
     end
 
     def stats
-      e = ErnieBrodeur::DM::Models::Image.all
+      e = Bini::DM::Models::Image.all
 
       sizes = e.map{|x| x.ratio}.uniq.sort
 

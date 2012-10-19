@@ -2,7 +2,7 @@
 $:.push '/home/ebrodeur/Projects/bin_snippets/lib'
 require 'app'
 require 'optparser'
-include ErnieBrodeur
+include Bini
 
 App.version = "0.0.1"
 App.banner = "This is a utilty to help identify duplicate files in a list and print them to console."

@@ -1,6 +1,6 @@
 require 'fileutils'
 
-module ErnieBrodeur
+module Bini
   class ConfigBlob < Hash
     BaseDir = "/home/ebrodeur/.config/erniebrodeur"
 
