@@ -33,9 +33,24 @@ task :release do
 	end
 end
 
+desc "Tag the current version in git, is destructive."
+task :tag do
+	if git_dirty?
+		puts "Changes left uncommited, exiting."
+		exit
+	end
+
+	puts `git tag -a -m \"Version #{Bini::VERSION}\" v#{Bini::VERSION}`
+end
+
 # Helpers below here.
 def build_exist?
 	File.exist?("pkg/bini-#{Bini::VERSION}.gem")
+end
+
+def git_dirty?
+	# That's execute git diff, and return the invert of the result of empty?
+	!`git diff`.empty?
 end
 
 def push_file(filename)
