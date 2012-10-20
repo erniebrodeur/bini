@@ -37,6 +37,7 @@ end
 def build_exist?
 	File.exist?("pkg/bini-#{Bini::VERSION}.gem")
 end
+
 def push_file(filename)
 	puts "Update to: #{filename}"
 	puts "Uploading to gems.ujami.net"
@@ -51,7 +52,6 @@ def push_file(filename)
 	end
 end
 
-# Takes a URI.
 def remote_file_exists?(uri)
 	u = URI uri
 
