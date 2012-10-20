@@ -39,8 +39,9 @@ task :tag do
 		puts "Changes left uncommited, exiting."
 		exit
 	end
+	`git tag -a -m \"Version #{Bini::VERSION}\" v#{Bini::VERSION}`
 
-	puts `git tag -a -m \"Version #{Bini::VERSION}\" v#{Bini::VERSION}`
+	puts "Tagged the latest version to #{Bini::VERSION}"
 end
 
 # Helpers below here.
