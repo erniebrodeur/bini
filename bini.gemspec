@@ -27,5 +27,4 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "sys-proctable"
   gem.add_runtime_dependency "pry"
   gem.add_development_dependency "net-scp"
-  gem.add_development_dependency "net-http"
 end
