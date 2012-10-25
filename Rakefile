@@ -4,9 +4,18 @@ require 'uri'
 require_relative 'lib/bini/version.rb'
 task :default => [:build]
 
-desc "Build the latest version of bini into a gem."
+task :pry do
+	require 'pry'
+	binding.pry
+end
 
+desc "Build the latest version of bini into a gem."
 task :build do
+	if git_dirty?
+		puts "Uncommited changes, exiting."
+		exit
+	end
+
 	if build_exist?
 		puts "Latest build exists in pkg, exiting."
 		exit
@@ -21,8 +30,7 @@ end
 desc "Push available copies of the gem to gems.ujami.net"
 task :release do
 	if !build_exist?
-		puts "Please build the latest version first."
-		exit
+		Rake::Task[:build].invoke
 	end
 
 	if remote_file_exists? "http://gems.ujami.net/gems/bini-#{Bini::VERSION}.gem"
@@ -40,6 +48,7 @@ task :tag do
 		exit
 	end
 	`git tag -a -m \"Version #{Bini::VERSION}\" v#{Bini::VERSION}`
+	puts `git push --tags`
 
 	puts "Tagged the latest version to #{Bini::VERSION}"
 end
