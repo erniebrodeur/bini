@@ -1,7 +1,4 @@
 #!/usr/bin/ruby
 
-require 'pry'
-binding.pry
-
 project_name = Dir.pwd.split("/").last
 open("#{project_name}.sublime-project", "w").write "{\"folders\":[{\"path\":\"#{Dir.pwd}\"}]}"
