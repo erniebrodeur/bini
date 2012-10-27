@@ -11,7 +11,7 @@ module Bini
    		DataMapper.setup(:default, "sqlite://#{db_path}")
 
 			%w{file image}.each do |f|
-			  require "models/dm/#{f}.rb"
+			  require "bini/models/dm/#{f}"
 			end
 
 			DataMapper.auto_upgrade!

@@ -9,9 +9,7 @@ module Bini
   App.plugins.push 'couch'
 end
 
-# TODO not suck by hard coding this
-
 # since we have to have a specific order, lets just make a word list real quick.
 %w{file image}.each do |f|
-  require "/home/ebrodeur/Projects/bin_snippets/lib/couch_models/#{f}"
+  require "bini/models/couch/#{f}"
 end

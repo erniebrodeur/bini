@@ -1,10 +1,10 @@
 #!/usr/bin/ruby
 require 'bini/app'
+require 'bini/dm'
 require 'bini/log'
 require 'bini/config'
 require 'bini/optparser'
 require 'bini/filemagic'
-require "dm-core"
 
 include Bini
 include Bini::NextBackground
