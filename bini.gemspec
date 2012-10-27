@@ -9,8 +9,8 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Ernie Brodeur"]
   gem.email         = ["ebrodeur@ujami.net"]
   gem.description   = "Bini needs no description."
-  gem.summary       = "No really, it doesn't."
-  gem.homepage      = ""
+  gem.summary       = "Bini is a gem that helps me build CLI tools.  It's not thor, trollop, or any of the other major frameworks.  It makes lots and lots of assumptions.  It's probably not for you."
+  gem.homepage      = "https://github.com/erniebrodeur/bini"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
