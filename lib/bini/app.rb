@@ -9,6 +9,13 @@ module Bini
     attr_accessor :long_description
     attr_accessor :plugins
 
+    def initialize
+      @version = '0.0.0'
+      @banner  = 'A bin snippet by Ernie Brodeur that does . . . something.'
+      @long_description = ''
+      @plugins = []
+    end
+
     # return the name of the app, for now this is just the cmd ran, later it will be
     # something generated but more unique.
     def name
@@ -30,12 +37,6 @@ module Bini
       nil
     end
 
-    def initialize
-      @version = '0.0.0'
-      @banner  = 'A bin snippet by Ernie Brodeur that does . . . something.'
-      @long_description = ''
-      @plugins = []
-    end
 
     def daemonize(*params, &block)
       if params[0] && !params[0][:multiple_pids] && pids
