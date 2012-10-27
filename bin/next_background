@@ -25,8 +25,6 @@ Options.on("--ratio [RATIO]", "Select the ratio to search for.") {|r| Options[:r
 Options.parse!
 Options.on_pry
 
-if __FILE__ == $0
-  run_once if Options[:run_once]
-  daemonize if Options[:daemonize]
-  kill_daemon if Options[:kill_daemon]
-end
+run_once if Options[:run_once]
+daemonize if Options[:daemonize]
+kill_daemon if Options[:kill_daemon]
