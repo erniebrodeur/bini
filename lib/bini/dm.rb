@@ -3,6 +3,7 @@ require 'data_mapper'
 module Bini
   module DM
   	def self.db_path
+      FileUtils.mkdir_p App.config_dir if !Dir.exist? App.config_dir
   		"#{App.config_dir}/#{App.name}.db"
   	end
 
