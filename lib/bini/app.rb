@@ -75,6 +75,6 @@ module Bini
   begin
     require "bini/helpers/#{App.name}.rb"
   rescue LoadError => e
-    puts e
+    puts e if $DEBUG
   end
 end

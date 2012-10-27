@@ -5,21 +5,20 @@ require 'bini/optparser'
 include Bini
 
 App.banner = "Usage: Use ruby to cat a file and produce colored output."
-App.version = "0.9.0"
+App.version = "0.9.1"
 
 Options.parse!
 
 require 'coderay'
-if __FILE__ == $0
-  if ARGV.empty?
-    puts 'you need to supply a list of filenames to cat to screen.'
-  else
-    ARGV.each do |f|
-      if File.exist? f
-        puts CodeRay.scan_file(f).terminal
-      else
-        puts "No such file: #{f}"
-      end
+
+if ARGV.empty?
+  puts 'you need to supply a list of filenames to cat to screen.'
+else
+  ARGV.each do |f|
+    if File.exist? f
+      puts CodeRay.scan_file(f).terminal
+    else
+      puts "No such file: #{f}"
     end
   end
 end
