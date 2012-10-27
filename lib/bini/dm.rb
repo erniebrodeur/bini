@@ -3,8 +3,7 @@ require 'data_mapper'
 module Bini
   module DM
   	def self.db_path
-  		# TODO not hardcode this.
-  		"/home/ebrodeur/.config/erniebrodeur/#{App.name}.db"
+  		"#{App.config_dir}/#{App.name}.db"
   	end
 
   	def self.initialize
@@ -12,7 +11,7 @@ module Bini
    		DataMapper.setup(:default, "sqlite://#{db_path}")
 
 			%w{file image}.each do |f|
-			  require "/home/ebrodeur/Projects/bin_snippets/lib/models/dm/#{f}.rb"
+			  require "models/dm/#{f}.rb"
 			end
 
 			DataMapper.auto_upgrade!

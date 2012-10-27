@@ -2,19 +2,17 @@ require 'fileutils'
 
 module Bini
   class ConfigBlob < Hash
-    BaseDir = "/home/ebrodeur/.config/erniebrodeur"
-
     def initialize(load = true)
-      FileUtils.mkdir_p BaseDir if !Dir.exist? BaseDir
       self.load if load
     end
 
     def file
-      "#{BaseDir}/#{App.name}.json"
+      "#{App.config_dir}/#{App.name}.json"
     end
 
     def save
       if any?
+        FileUtils.mkdir_p App.config_dir if !Dir.exist? App.config_dir
         # I do this the long way because I want an immediate sync.
         f = open(file, 'w')
         f.write Yajl.dump self

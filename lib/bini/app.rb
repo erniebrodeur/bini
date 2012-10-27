@@ -16,11 +16,11 @@ module Bini
     end
 
     def cache_dir
-      "#{Dir.home}/.cache/erniebrodeur/#{App.name}/"
+      "#{Dir.home}/.cache/bini/#{App.name}/"
     end
 
     def config_dir
-      "#{Dir.home}/.config/erniebrodeur/#{App.name}/"
+      "#{Dir.home}/.config/bini/#{App.name}/"
     end
 
     def pids

@@ -31,7 +31,7 @@ The Gemfile here isn't split up per package, it is just a home for the various c
 
 * app: Gives some basic application support, and some universal namespacing.  all other components depend on this being loaded first.
 * cli: Add option parsing and some support to break in via pry into any app.
-* config: Used for config file loading and saving in ~/.config/erniebrodeur
+* config: Used for config file loading and saving in ~/.config/bini
 * couch: mixin support for couchdb'ing on the localhost, including a few basic model's I use all the time.
 * filemagic: File detection based on the unix 'file' command to do magic detection.  Currently only returns mime_type.
 
