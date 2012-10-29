@@ -18,7 +18,6 @@ The Gemfile here isn't split up per package, it is just a home for the various c
 # Binaries
 
 ## Beta:
-* rcat: Color output via coderay, not that sophisticated yet, can't pipe with it.
 * jsbeautify: run a json blob through yajl to pretty it up and check for syntax, supports piping.
 * cower_glob: download a bunch of stuff from AUR based on a glob string.
 * next_background: Indexes directories into couch, then can change links and reset xfce4 backgrounds.
