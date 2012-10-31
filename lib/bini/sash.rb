@@ -69,7 +69,7 @@ module Bini
       false
     end
 
-    # Backup the file, this is a two step process.
+    # Generate a backup file real quick.
     def backup
       FileUtils.cp @file, backup_file if File.file? @file
     end
