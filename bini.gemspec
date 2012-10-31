@@ -17,9 +17,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
   gem.add_runtime_dependency "coderay"
-  gem.add_runtime_dependency "couchrest"
-  gem.add_runtime_dependency "couchrest_model"
   gem.add_runtime_dependency "yajl-ruby"
   gem.add_runtime_dependency "sys-proctable"
-  gem.add_runtime_dependency "pry"
+  gem.add_development_dependency "pry"
 end
