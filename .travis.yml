@@ -7,5 +7,5 @@ rvm:
   - rbx-19mode
 
 branches:
-	only:
-		- master
+  only:
+    - master
