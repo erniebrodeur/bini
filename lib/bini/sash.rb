@@ -1,8 +1,7 @@
 require 'fileutils'
 require 'yaml'
 
-# This is a savable hash, it can be configured and used to store whatever the
-# contents of the hash are for loading later.  Will serialize in yaml to keep all
+# This is a savable hash, it can be configured and used to store whatever the# contents of the hash are for loading later.  Will serialize in yaml to keep all
 # the dependencies in ruby stdlib.
 module Bini
   class Sash < Hash
@@ -12,6 +11,8 @@ module Bini
     attr_accessor :mode
     attr_accessor :auto_load
     attr_accessor :auto_save
+
+
 
     # initialization sets the values of the class Sash, not the contents of the Hash.
     def initialize(params = {})
@@ -59,6 +60,7 @@ module Bini
 
     # Load the save file into self.
     def load
+      self.clear
       if @file && File.exist?(@file) && File.stat(@file).size > 0
         h = YAML::load open(@file, 'r').read
         h.each { |k,v| self[k.to_sym] = v}
@@ -69,9 +71,7 @@ module Bini
 
     # Backup the file, this is a two step process.
     def backup
-      return false if !@file || !backup_file
       FileUtils.cp @file, backup_file if File.file? @file
-      true
     end
 
     # Set the mode of both the save file and backup file.
@@ -96,4 +96,3 @@ module Bini
     end
   end
 end
-
