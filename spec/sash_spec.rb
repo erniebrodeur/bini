@@ -4,7 +4,7 @@ include Bini
 
 describe "Sash" do
 	def random_file
-		"tmp/sash-#{Random.rand(0..10000000).to_s(16)}.yaml"
+		"tmp/sash-#{(0...4).map{rand(16).to_s(16)}.join}.yaml"
 	end
 
 	before (:all) do
