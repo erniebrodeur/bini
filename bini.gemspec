@@ -16,7 +16,6 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
-  gem.add_runtime_dependency "coderay"
   gem.add_runtime_dependency "yajl-ruby"
   gem.add_runtime_dependency "sys-proctable"
   gem.add_development_dependency "pry"
