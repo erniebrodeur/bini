@@ -3,7 +3,3 @@ rvm:
   - 1.9.3
   - ree
   - rbx-19mode
-
-branches:
-  only:
-    - master
