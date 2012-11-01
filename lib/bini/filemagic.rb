@@ -1,13 +1,15 @@
 module Bini
-  # Add some basic filemagic types.
-  class FileMagic
-    def self.mime_type(file)
-      if File.exist? file
-        %x[file -bk --mime-type '#{file}'].chomp!
-      else
-        raise 'nosuchfile'
-      end
+  module FileMagic
+    extend self
+
+    def mime_type(file)
+      return `file -bk --mime-type "#{file}"`.chomp! if File.exist? file
+      return nil
+    end
+
+    private
+    def filemagic_version
+      `file -v`.split(/^file-(.*)\nmagic file from (.*)\n/)[1]
     end
   end
-  App.plugins.push 'filemagic'
 end

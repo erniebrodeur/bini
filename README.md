@@ -1,35 +1,71 @@
-# Bini [![Build Status](https://secure.travis-ci.org/erniebrodeur/bini.png)](http://travis-ci.org/erniebrodeur/bini)
-This is a collection of snippets that help me in my daily workflow, but don't warrant entire gems/packages.
+# Bini
 
-Consider it a library of useful utilities.
+A toolbox to help me rapidly build/deploy a cli.  Filled with assumptions about how I think a CLI should behave.
 
-# Directory structure:
+#### Build Status
+<table border="0">
+  <tr>
+    <td>master</td>
+    <td><a href=http://travis-ci.org/erniebrodeur/bini?branch=master><img src="https://secure.travis-ci.org/erniebrodeur/bini.png?branch=master"/></h> </td>
+  </tr>
+  <tr>
+    <td>development</td>
+    <td><a href=http://travis-ci.org/erniebrodeur/bini?branch=development><img src="https://secure.travis-ci.org/erniebrodeur/bini.png?branch=development"/></h> </td>
+  </tr>
+</table>
 
-* bin
- * This directory contains all the scripts themselves.  This is to limit $PATH polution and make it installable as a gem.
+## Installation
 
-* lib
- * Our supporting members go here, nothing fancy just grouped together in modules based on intended usage.
+To install:
 
-# Gemfile:
+		% gem install bini
 
-The Gemfile here isn't split up per package, it is just a home for the various components so I can run bundle on new hosts and get what I need.
+To use inside of an application, add this to the your gemfile:
 
-# Binaries
+		% gem 'bini'
 
-## Beta:
-* jsbeautify: run a json blob through yajl to pretty it up and check for syntax, supports piping.
-* cower_glob: download a bunch of stuff from AUR based on a glob string.
-* next_background: Indexes directories into couch, then can change links and reset xfce4 backgrounds.
+and run bundle to make it available:
 
-## Alpha:
-* dedup: Useful for deduplicating data.
-* makepkg_concurrent: go into the ~/cower dir and make everything, all at once, horribly noisy.  Currently isn't concurrent.
+		% bundle
 
-# Library notes
+## Usage
 
-* app: Gives some basic application support, and some universal namespacing.  all other components depend on this being loaded first.
-* cli: Add option parsing and some support to break in via pry into any app.
-* config: Used for config file loading and saving in ~/.config/bini
-* filemagic: File detection based on the unix 'file' command to do magic detection.  Currently only returns mime_type.
+Bini is broken up into a few pieces, always include this first:
 
+```ruby
+require 'bini'
+```
+
+Optional components can be loaded like this:
+
+```ruby
+require 'bini/config'
+require 'bini/optparser'
+require 'bini/log'
+```
+
+### API
+
+Generated documentation is available via ```yard```.
+
+Examples and wiki coming if they are ever needed.
+
+## Testing
+
+In theory, testing is complete, in practice it's a work in progress.
+
+## Design philosophy
+
+If such a thing can be said.
+
+* Whenever possible, sane defaults will be supplied.
+* A minimum amount of configuration before execution.
+* If it requires a large chunk of requires, put it in a sub gem.
+* Speed is of the utmost importance.
+* Whenever possible, use stuff out of the stdlib.
+
+## Contributing
+
+I don't have rules here, more guidelines.
+
+* Try to make the branch name clear, words like feature/issue/bug help.

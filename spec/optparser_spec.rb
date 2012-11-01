@@ -43,7 +43,7 @@ describe "optparser" do
 	end
 	describe "parse" do
 		it "will attempt to mash in the Config[]#hash if available." do
-			Bini::Config[@key] == @value
+			Bini::config[@key] == @value
 			Options.parse!
 			Options[@key] = @value
 		end

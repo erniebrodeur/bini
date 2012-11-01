@@ -7,22 +7,21 @@ module Bini
       @options = {}
 
       on("-V", "--version", "Print version") { |version| @options[:version] = true}
-      if App.plugins.include? 'logging'
-        on("-l", "--log-level LEVEL", "Change the log level, default is debug.") { |level| Bini::Log.level level }
-        on("--log-file FILE", "What file to output to, default is STDOUT") { |file| Bini::Log.filename file }
-      end
     end
 
     def parse!
-      @banner = Bini::App.banner
       super
 
       if @options[:version]
-        puts Bini::App.version
+        if Bini.version
+          puts Bini.version
+        else
+          puts "No version supplied."
+        end
         exit 0
       end
 
-      mash Bini::Config if Bini::Config
+      mash Bini.config if Bini.config
     end
 
     # These are the hash like bits.
