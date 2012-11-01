@@ -1,4 +1,4 @@
-# Bini [![Build Status](https://secure.travis-ci.org/erniebrodeur/bini.png)](http://travis-ci.org/erniebrodeur/bini)
+# Bini [![Build Status](https://secure.travis-ci.org/erniebrodeur/bini.png?branch=master,development)](http://travis-ci.org/erniebrodeur/bini)
 This is a collection of snippets that help me in my daily workflow, but don't warrant entire gems/packages.
 
 Consider it a library of useful utilities.
