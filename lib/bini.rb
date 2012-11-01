@@ -1,4 +1,3 @@
-require 'yajl'
 require 'sys/proctable'
 
 require "bini/sash"
