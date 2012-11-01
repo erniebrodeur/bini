@@ -7,10 +7,6 @@ module Bini
       @options = {}
 
       on("-V", "--version", "Print version") { |version| @options[:version] = true}
-      # if Bini::Logger != nil
-      #   on("-l", "--log-level LEVEL", "Change the log level, default is debug.") { |level| Bini::Log.level level }
-      #   on("--log-file FILE", "What file to output to, default is STDOUT") { |file| Bini::Log.filename file }
-      # end
     end
 
     def parse!

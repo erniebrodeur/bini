@@ -43,10 +43,10 @@ module Bini
 
   def daemonize(*params, &block)
     if params[0] && !params[0][:multiple_pids] && pids
-      puts_or_log :info, "#{@name} appears to be running (#{pids}), only one allowed, exiting."
+      puts :info, "#{@name} appears to be running (#{pids}), only one allowed, exiting."
       exit
     end
-    puts_or_log :info, "Forking to background."
+    puts :info, "Forking to background."
 
     Process.daemon
     block.call
@@ -54,11 +54,11 @@ module Bini
 
   def kill_daemon
     if !pids
-      puts_or_log :fatal, "No pids found, exiting."
+      puts :fatal, "No pids found, exiting."
     end
 
     pids.each do |p|
-      puts_or_log :info, "Killing #{p}"
+      puts :info, "Killing #{p}"
       `kill -TERM #{p}`
     end
   end
@@ -87,16 +87,6 @@ module Bini
   # Helper to clean up recursive method in #parameters
   def get_var(var)
     self.instance_variable_get(var)
-  end
-
-  private
-  def puts_or_log(l, s)
-    if @plugins.include? 'logging'
-      Log.send l, s
-    else
-      puts s
-      exit if l.to_sym == :fatal
-    end
   end
 end
 
