@@ -5,5 +5,5 @@ module Bini
 
   extend self
 
-  self.config = Sash.new file:"#{App.config_dir}/#{App.name}.yaml"
+  self.config = Sash.new file:"#{Bini.config_dir}/#{Bini.name}.yaml"
 end
