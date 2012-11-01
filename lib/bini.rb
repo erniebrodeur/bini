@@ -6,18 +6,32 @@ require "bini/version"
 require "bini/filemagic"
 
 module Bini
-  attr_accessor :name
+  extend self
+
   attr_accessor :cache_dir
   attr_accessor :config_dir
-  attr_accessor :banner
 
-  # return the name of the app, for now this is just the cmd ran, later it will be
-  # something generated but more unique.
-  def initialize
-    # basically don't call these if they are already provided.
-    @name       = $0.split("/").last if !@name
-    @cache_dir  = "#{Dir.home}/.cache/bini/#{@name}/" if !@cache_dir
-    @config_dir = "#{Dir.home}/.config/bini/#{@name}/" if !@config_dir
+  def long_name=(name)
+    @long_name = name
+  end
+
+  def long_name
+    @long_name ||= $0.split("/").last if !@name
+  end
+  def cache_dir=(dir)
+    @cache_dir = dir
+  end
+
+  def cache_dir
+    @cache_dir ||= "#{Dir.home}/.cache/bini/#{$0}/"
+  end
+
+  def config_dir=(dir)
+    @config_dir = dir
+  end
+
+  def config_dir
+    @config_dir ||= "#{Dir.home}/.cache/bini/#{$0}/"
   end
 
   def pids
@@ -59,7 +73,7 @@ module Bini
   # List available parameters and values in those params
   def parameters
     @values = {}
-    keys.each { |k| @values.merge! k => get_var("@#{k}") }
+    keys.each { |k| @values.merge! k => Bini.send(k) }
     @values
   end
   alias_method :params, :parameters
@@ -69,9 +83,9 @@ module Bini
     parameters.values.all?
   end
 
-  # A [Array] of keys available in Pushover.
+  # A [Array] of keys available in Bini.
   def keys
-    keys ||= [:token, :user, :message, :title, :priority, :device]
+    keys ||= [:cache_dir, :config_dir]
   end
 
   private

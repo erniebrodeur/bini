@@ -1,6 +1,6 @@
 # Bini
 
-A gem to help me rapidly build/deploy a cli.
+A toolbox to help me rapidly build/deploy a cli.  Filled with assumptions about how I think a CLI should behave.
 
 #### Build Status
 <table border="0">
@@ -47,6 +47,8 @@ require 'bini/log'
 ### API
 
 Generated documentation is available via ```yard```.
+
+Examples and wiki coming if they are ever needed.
 
 ## Testing
 
