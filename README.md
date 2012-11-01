@@ -54,6 +54,15 @@ Examples and wiki coming if they are ever needed.
 
 In theory, testing is complete, in practice it's a work in progress.
 
+## Design philosophy
+
+If such a thing can be said.
+
+* Whenever possible, sane defaults will be supplied.
+* A minimum amount of configuration before execution.
+* If it requires a large chunk of requires, put it in a sub gem.
+* Speed is of the utmost importance.
+* Whenever possible, use stuff out of the stdlib.
 
 ## Contributing
 
