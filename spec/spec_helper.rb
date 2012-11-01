@@ -1,5 +1,4 @@
 require 'bini'
-require 'bini/app'
 require 'bini/optparser'
 require 'bini/config'
 
