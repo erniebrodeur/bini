@@ -22,7 +22,7 @@ module Bini
         exit 0
       end
 
-      mash Bini::Config if Bini::Config
+      mash Bini.config if Bini.config
     end
 
     # These are the hash like bits.

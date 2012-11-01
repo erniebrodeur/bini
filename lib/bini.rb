@@ -1,5 +1,7 @@
+require "bini/app"
+require "bini/sash"
 require "bini/version"
 
 module Bini
-  # Your code goes here...
+
 end

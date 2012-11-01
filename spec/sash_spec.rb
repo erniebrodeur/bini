@@ -1,4 +1,4 @@
-require 'bini/sash'
+require 'bini'
 
 include Bini
 
