@@ -71,11 +71,4 @@ module Bini
   end
 
   App = Application.new
-
-  # Try to load a helper, 'rescue' if it isn't there.
-  begin
-    require "bini/helpers/#{App.name}.rb"
-  rescue LoadError => e
-    puts e if $DEBUG
-  end
 end
