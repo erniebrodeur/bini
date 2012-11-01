@@ -8,30 +8,30 @@ require "bini/filemagic"
 module Bini
   extend self
 
-  attr_accessor :cache_dir
-  attr_accessor :config_dir
+  attr_accessor :defaults
 
-  def long_name=(name)
-    @long_name = name
+  # I break this out so that I can use long name right away, this allows methods
+  # like configure to work.
+
+  @defaults = {}
+  @defaults[:long_name] = $0.split("/").last
+  @defaults[:cache_dir] = "#{Dir.home}/.cache/bini/#{@long_name}/"
+  @defaults[:config_dir] = "#{Dir.home}/.config/bini/#{@long_name}/"
+
+  # Dynamic attribute's based off the keys.
+  def keys
+    [:long_name, :cache_dir, :config_dir]
   end
 
-  def long_name
-    @long_name ||= $0.split("/").last if !@name
-  end
-  def cache_dir=(dir)
-    @cache_dir = dir
-  end
-
-  def cache_dir
-    @cache_dir ||= "#{Dir.home}/.cache/bini/#{$0}/"
-  end
-
-  def config_dir=(dir)
-    @config_dir = dir
-  end
-
-  def config_dir
-    @config_dir ||= "#{Dir.home}/.cache/bini/#{$0}/"
+  keys.each do |key|
+    define_method(key) do
+      v = instance_variable_get "@#{key}"
+      return @defaults[key] if !v
+      return v
+    end
+    define_method("#{key}=".to_sym) do |dir|
+      instance_variable_set "@#{key}", dir
+    end
   end
 
   def pids
@@ -83,11 +83,6 @@ module Bini
     parameters.values.all?
   end
 
-  # A [Array] of keys available in Bini.
-  def keys
-    keys ||= [:cache_dir, :config_dir]
-  end
-
   private
 
   # Helper to clean up recursive method in #parameters
@@ -105,3 +100,4 @@ module Bini
     end
   end
 end
+
