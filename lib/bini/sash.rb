@@ -1,9 +1,9 @@
 require 'fileutils'
 require 'yaml'
 
-# This is a savable hash, it can be configured and used to store whatever the# contents of the hash are for loading later.  Will serialize in yaml to keep all
-# the dependencies in ruby stdlib.
 module Bini
+  # This is a savable hash, it can be configured and used to store whatever the# contents of the hash are for loading later.  Will serialize in yaml to keep all
+  # the dependencies in ruby stdlib.
   class Sash < Hash
 
     attr_accessor :file
@@ -48,8 +48,8 @@ module Bini
       true
     end
 
-    def []=(k,v)
-      store k, v
+    def []=(key,value)
+      store key, value
       save! if @auto_save == true
     end
     # Save the hash to a file, overwriting if necessary.
