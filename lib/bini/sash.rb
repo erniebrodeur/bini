@@ -63,7 +63,7 @@ module Bini
       self.clear
       if @file && File.exist?(@file) && File.stat(@file).size > 0
         h = YAML::load open(@file, 'r').read
-        h.each { |k,v| self[k.to_sym] = v}
+        h.each { |k,v| self[k] = v}
         return true
       end
       false

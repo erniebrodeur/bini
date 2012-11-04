@@ -26,12 +26,13 @@ describe "Sash" do
 	end
 
 	it "can save" do
-		@s[:foo] = :bar
+		@s['foo'] = :bar
 		@s.save
 		@s2 = Sash.new file:@filename
 		@s2.load
-		@s2[:foo].should eq :bar
+		@s2['foo'].should eq :bar
 	end
+
 	it "can set the mode" do
 		@s.mode = 0600
 		@s.set_mode
