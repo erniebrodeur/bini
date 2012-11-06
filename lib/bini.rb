@@ -19,14 +19,13 @@ module Bini
 
   # Dynamic attribute's based off the keys.
   def keys
-    [:long_name, :cache_dir, :config_dir]
+    keys ||= [:long_name, :cache_dir, :config_dir]
   end
 
   keys.each do |key|
     define_method(key) do
       v = instance_variable_get "@#{key}"
-      return @defaults[key] if !v
-      return v
+      return !v ? @defaults[key] : v
     end
     define_method("#{key}=".to_sym) do |dir|
       instance_variable_set "@#{key}", dir
