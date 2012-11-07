@@ -20,8 +20,6 @@ module Bini
         end
         exit 0
       end
-
-      mash Bini.config if Bini.config
     end
 
     # These are the hash like bits.
