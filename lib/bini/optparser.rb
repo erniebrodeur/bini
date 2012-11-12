@@ -12,13 +12,10 @@ module Bini
     def parse!
       super
 
-      if @options[:version]
-        if Bini.version
-          puts Bini.version
-        else
-          puts "No version supplied."
-        end
-        exit 0
+      if Bini.version
+        puts Bini.version
+        # don't exit if RSpec is around, we are in a testing environment.
+        exit 0 if !Object.constants.include? :RSpec
       end
     end
 
@@ -48,4 +45,5 @@ module Bini
   end
   Options = OptionParser.new
 end
+
 

@@ -19,7 +19,7 @@ module Bini
 
   # Dynamic attribute's based off the keys.
   def keys
-    keys ||= [:long_name, :cache_dir, :config_dir]
+    keys ||= [:long_name, :cache_dir, :config_dir, :version]
   end
 
   keys.each do |key|
