@@ -15,10 +15,10 @@ group :development do
 	gem 'rb-inotify', :require => false
   gem 'rb-fsevent', :require => false
   gem 'rb-fchange', :require => false
-	gem 'simplecov', :require => false
 end
 
 group :test do
 	gem "rspec"
 	gem "rake"
+	gem 'simplecov'
 end
