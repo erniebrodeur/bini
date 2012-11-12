@@ -32,36 +32,6 @@ module Bini
     end
   end
 
-  def pids
-    a = Sys::ProcTable.ps.select{|x| x.cmdline =~ /.*#{@name}.*-[dD].*/}.map {|x| x.pid}
-    a.delete $$
-    return a if a.any?
-    nil
-  end
-
-
-  def daemonize(*params, &block)
-    if params[0] && !params[0][:multiple_pids] && pids
-      puts :info, "#{@name} appears to be running (#{pids}), only one allowed, exiting."
-      exit
-    end
-    puts :info, "Forking to background."
-
-    Process.daemon
-    block.call
-  end
-
-  def kill_daemon
-    if !pids
-      puts :fatal, "No pids found, exiting."
-    end
-
-    pids.each do |p|
-      puts :info, "Killing #{p}"
-      `kill -TERM #{p}`
-    end
-  end
-
   # Adds a rails style configure method (@benwoody's unknown contribution)
   def configure
     yield self
@@ -76,16 +46,9 @@ module Bini
   end
   alias_method :params, :parameters
 
-  # Returns true or false if all parameters are set.
+  # Returns true or false if all parameters are set to something other than defaults.
   def parameters?
-    parameters.values.all?
-  end
-
-  private
-
-  # Helper to clean up recursive method in #parameters
-  def get_var(var)
-    self.instance_variable_get(var)
+    @defaults.map {|k,v| @defaults[k] != parameters[k]}.all?
   end
 end
 
