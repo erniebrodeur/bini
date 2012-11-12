@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 require 'bini'
 require 'bini/optparser'
 require 'bini/config'

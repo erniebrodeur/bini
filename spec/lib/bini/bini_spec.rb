@@ -9,8 +9,18 @@ describe "Bini" do
 		@cache_dir = Bini.cache_dir
 		Bini.config_dir = nil
 		@config_dir = Bini.config_dir
+		Bini.version = nil
 	end
 
+	describe "parameters?" do
+		it 'will return true only if everything is true.' do
+			Bini.long_name = "tmp/test"
+			Bini.parameters?.should be_false
+			Bini.cache_dir = "tmp/here"
+			Bini.config_dir = "tmp/there"
+			Bini.parameters?.should be_true
+		end
+	end
 	# I can probably do this dynamically.
 	describe "long_name" do
 		it "can be reset" do
@@ -31,9 +41,9 @@ describe "Bini" do
 
 		it "can be configured via .configure" do
 			r = random_hex 4
-			Bini.configure do |c|
-				c.long_name = r
-			end
+				Bini.configure do |c|
+					c.long_name = r
+				end
 			Bini.long_name.should eq r
 		end
 	end
