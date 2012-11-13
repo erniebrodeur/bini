@@ -4,6 +4,10 @@ require "bini/sash"
 require "bini/version"
 require "bini/filemagic"
 
+# A collection of very small helpers that assist me in writing a CLI without
+# getting in the way.
+# @attr [Hash] defaults a collection of defaults for the keys.
+# @attr [Array] keys a list of attributes that are generated.
 module Bini
   extend self
 
@@ -32,7 +36,7 @@ module Bini
     end
   end
 
-  # Adds a rails style configure method (@benwoody's unknown contribution)
+  # Adds a rails style configure method.
   def configure
     yield self
     parameters

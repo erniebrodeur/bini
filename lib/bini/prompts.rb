@@ -1,5 +1,3 @@
-# This is originally from: https://gist.github.com/2040373
-
 module Bini
   # A few prompts I may need in making CLI's.
   module Prompts
@@ -22,4 +20,3 @@ module Bini
     end
   end
 end
-

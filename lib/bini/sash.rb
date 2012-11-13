@@ -12,8 +12,6 @@ module Bini
     attr_accessor :auto_load
     attr_accessor :auto_save
 
-
-
     # initialization sets the values of the class Sash, not the contents of the Hash.
     def initialize(params = {})
       params.each { |k,v| instance_variable_set "@" + k.to_s,v}
@@ -47,7 +45,7 @@ module Bini
       end
       true
     end
-
+    # Store a value in the Hash.  Can autosave.
     def []=(key,value)
       store key, value
       save! if @auto_save == true

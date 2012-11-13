@@ -2,7 +2,7 @@
 
 A toolbox to help me rapidly build/deploy a cli.  Filled with assumptions about how I think a CLI should behave.
 
-#### Build Status
+## Build Status
 <table border="0">
   <tr>
     <td>master</td>
@@ -50,10 +50,6 @@ Generated documentation is available via ```yard```.
 
 Examples and wiki coming if they are ever needed.
 
-## Testing
-
-In theory, testing is complete, in practice it's a work in progress.
-
 ## Design philosophy
 
 If such a thing can be said.
@@ -69,3 +65,4 @@ If such a thing can be said.
 I don't have rules here, more guidelines.
 
 * Try to make the branch name clear, words like feature/issue/bug help.
+* Tests.

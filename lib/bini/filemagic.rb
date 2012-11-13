@@ -1,7 +1,11 @@
 module Bini
+  # A collection of helpers related to file management.
   module FileMagic
     extend self
 
+    # Call the system app 'file' to check mimetype.
+    # @param [String] file name of the file.
+    # @return [String, nil] return mimetype or nil
     def mime_type(file)
       return `file -bk --mime-type "#{file}"`.chomp! if File.exist? file
       return nil
