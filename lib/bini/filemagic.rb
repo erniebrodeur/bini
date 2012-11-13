@@ -4,7 +4,7 @@ module Bini
     extend self
 
     # Call the system app 'file' to check mimetype.
-    # @param [String] FILE name of the file.
+    # @param [String] file name of the file.
     # @return [String] of the mimetypes found
     # @return [Nil] if nothing worked.
     def mime_type(file)

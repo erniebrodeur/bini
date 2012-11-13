@@ -6,11 +6,22 @@ require "bini/filemagic"
 
 # A collection of very small helpers that assist me in writing a CLI without
 # getting in the way.
-# @attr [Hash] defaults a collection of defaults for the keys.
-# @attr [Array] keys a list of attributes that are generated.
+#
+# Provides some dynamic attributes, they all behave the same and just hook into
+# the defaults to provide non-nil results when needed.
+#
+# @!attribute long_name [rw]
+#  @return [String] An application name, useful if your app is named differently then your binary.
+# @!attribute cache_dir [rw]
+#  @return [String] The directory to store any cache related files.
+# @!attribute config_dir [rw]
+#  @return [String] The directory to store any config related files.
+# @!attribute version [rw]
+#  @return [String] The version of the application, not of Bini.
 module Bini
   extend self
 
+  # A collection of sane defaults to be provided if the same attr is still nil.
   attr_accessor :defaults
 
   # I break this out so that I can use long name right away, this allows methods

@@ -30,7 +30,7 @@ module Bini
     end
 
     # Get results from the builtin in Hash.
-    # @param [Symbol,String,nil] KEY is either a single key or nil for the entire hash.
+    # @param [Symbol,String,nil] key Either a single key or nil for the entire hash.
     # @return [Hash] a hash, empty or otherwise.
     def [](key = nil)
       return @options[key] if key
