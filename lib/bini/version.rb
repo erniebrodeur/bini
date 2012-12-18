@@ -1,3 +1,4 @@
 module Bini
-  VERSION = "0.5.6"
+  # The current version of Bini.
+  VERSION = "0.6.0"
 end

@@ -4,9 +4,24 @@ require "bini/sash"
 require "bini/version"
 require "bini/filemagic"
 
+# A collection of very small helpers that assist me in writing a CLI without
+# getting in the way.
+#
+# Provides some dynamic attributes, they all behave the same and just hook into
+# the defaults to provide non-nil results when needed.
+#
+# @!attribute long_name [rw]
+#  @return [String] An application name, useful if your app is named differently then your binary.
+# @!attribute cache_dir [rw]
+#  @return [String] The directory to store any cache related files.
+# @!attribute config_dir [rw]
+#  @return [String] The directory to store any config related files.
+# @!attribute version [rw]
+#  @return [String] The version of the application, not of Bini.
 module Bini
   extend self
 
+  # A collection of sane defaults to be provided if the same attr is still nil.
   attr_accessor :defaults
 
   # I break this out so that I can use long name right away, this allows methods
@@ -19,7 +34,7 @@ module Bini
 
   # Dynamic attribute's based off the keys.
   def keys
-    keys ||= [:long_name, :cache_dir, :config_dir]
+    keys ||= [:long_name, :cache_dir, :config_dir, :version]
   end
 
   keys.each do |key|
@@ -32,37 +47,7 @@ module Bini
     end
   end
 
-  def pids
-    a = Sys::ProcTable.ps.select{|x| x.cmdline =~ /.*#{@name}.*-[dD].*/}.map {|x| x.pid}
-    a.delete $$
-    return a if a.any?
-    nil
-  end
-
-
-  def daemonize(*params, &block)
-    if params[0] && !params[0][:multiple_pids] && pids
-      puts :info, "#{@name} appears to be running (#{pids}), only one allowed, exiting."
-      exit
-    end
-    puts :info, "Forking to background."
-
-    Process.daemon
-    block.call
-  end
-
-  def kill_daemon
-    if !pids
-      puts :fatal, "No pids found, exiting."
-    end
-
-    pids.each do |p|
-      puts :info, "Killing #{p}"
-      `kill -TERM #{p}`
-    end
-  end
-
-  # Adds a rails style configure method (@benwoody's unknown contribution)
+  # Adds a rails style configure method.
   def configure
     yield self
     parameters
@@ -76,16 +61,9 @@ module Bini
   end
   alias_method :params, :parameters
 
-  # Returns true or false if all parameters are set.
+  # Returns true or false if all parameters are set to something other than defaults.
   def parameters?
-    parameters.values.all?
-  end
-
-  private
-
-  # Helper to clean up recursive method in #parameters
-  def get_var(var)
-    self.instance_variable_get(var)
+    @defaults.map {|k,v| @defaults[k] != parameters[k]}.all?
   end
 end
 

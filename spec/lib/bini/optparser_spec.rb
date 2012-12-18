@@ -39,13 +39,17 @@ describe "optparser" do
 			Options.mash h
 			Options[:mash].should eq 'mush'
 		end
-
 	end
 	describe "parse" do
 		it "will attempt to mash in the Config[]#hash if available." do
-			Bini::config[@key] == @value
+			Bini::Config[@key] == @value
 			Options.parse!
 			Options[@key] = @value
+		end
+		it "Will echo the version set by Bini.version" do
+			Bini.version = "v0.0.0"
+			$stdout.should_receive(:puts).with(Bini.version)
+			Options.parse ["-V"]
 		end
 	end
 end
