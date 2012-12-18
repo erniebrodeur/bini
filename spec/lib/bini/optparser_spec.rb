@@ -47,10 +47,9 @@ describe "optparser" do
 			Options[@key] = @value
 		end
 		it "Will echo the version set by Bini.version" do
-			Options[:version] = true
 			Bini.version = "v0.0.0"
 			$stdout.should_receive(:puts).with(Bini.version)
-			Options.parse!
+			Options.parse ["-V"]
 		end
 	end
 end

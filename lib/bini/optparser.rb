@@ -12,16 +12,15 @@ module Bini
     end
 
     # Parse out ARGV, includes a catch for returning version, otherwise just calls super.
-    def parse!
+    def parse!(*argv)
       super
 
-      if Bini.version
+      if Options[:version] && Bini.version
         puts Bini.version
         # don't exit if RSpec is around, we are in a testing environment.
         exit 0 if !Object.constants.include? :RSpec
       end
     end
-
     # These are the hash like bits.
 
     # Clear the contents of the builtin Hash.
