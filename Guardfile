@@ -12,8 +12,8 @@ guard :rspec do
   watch(%r{^lib/(.+)\.rb$}) { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')      { "spec" }
 end
-group :docs do
-  guard :yard do
-    watch(%r{^lib/(.+)\.rb$})
-  end
-end
+# group :docs do
+#   guard :yard do
+#     watch(%r{^lib/(.+)\.rb$})
+#   end
+# end

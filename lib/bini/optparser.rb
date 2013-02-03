@@ -4,7 +4,7 @@ module Bini
   # An extension of [OptionParser] that behaves like a hash, with saving, loading, and
   # mashing in other hashs.
   class OptionParser < ::OptionParser
-    def initialize
+    def initialize(version = true)
       super
       @options = {}
 
@@ -51,7 +51,7 @@ module Bini
     end
   end
   # An automatically created entry point into the OptionParser class.
-  Options = Bini::OptionParser.new
+  Options ||= Bini::OptionParser.new
 end
 
 

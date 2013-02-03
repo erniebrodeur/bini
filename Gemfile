@@ -21,5 +21,6 @@ end
 group :test do
 	gem "rspec"
 	gem "rake"
+	gem 'childprocess'
 	gem 'simplecov'
 end

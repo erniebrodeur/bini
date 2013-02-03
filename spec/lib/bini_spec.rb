@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-# I'm not 100% sure convinvced any of these do what I think they do.
+# I'm not 100% sure/convinvced any of these do what I think they do.
 describe "Bini" do
 	before (:each) do
 		Bini.long_name = nil
