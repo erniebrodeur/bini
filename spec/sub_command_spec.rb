@@ -6,10 +6,10 @@ describe "Sub commands on the CLI" do
   it "will have a path like statement"
   context "when you type prefix command" do
     it "will parse the ARGV first upto subcommand"
-    it "will execute prefix-command"
-    it "will exit if asked (think --help)"
-    it "will fail gracefully if it can't find prefix-comand"
-    it "will command parse the remainder of ARGV"
+    it "will execute prefix-command with the remainder of ARGV"
+    it "will exit if asked (think --help) at the prefix level"
+    it "will fail gracefully if it can't find prefix-comand (with --help)"
+    it "will pass the rest of ARGV to prefix-command"
   end
 
   context "when you type just the command" do

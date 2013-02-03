@@ -6,6 +6,7 @@ end
 require 'bini'
 require 'bini/optparser'
 require 'bini/config'
+require 'bini/sub_command'
 
 include Bini
 
