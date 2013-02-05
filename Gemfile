@@ -23,4 +23,6 @@ group :test do
 	gem "rake"
 	gem 'childprocess'
 	gem 'simplecov'
+	gem 'bini-test-subcommand', git:"git@github.com:erniebrodeur/bini-test-subcommand.git"
+	#gem 'bini-test-prefix', git:"git@github.com:erniebrodeur/bini-test-prefix.git"
 end

@@ -3,55 +3,49 @@ module Bini
   module SubCommand
     extend self
 
-    attr_accessor :global_parser
-    @global_parser = Bini::OptionParser.new false
-
     attr_accessor :prefix
-    @prefix = 'git'
 
-    attr_accessor :bin_path
-    @bin_path = "./bin:#{ENV["PATH"]}"
-
-    attr_accessor :bail
+    @global_parser = Bini::OptionParser.new false
     @bail = false
 
-    # return's a hash of name:path of commands
-    def commands
-      @commands ||= find_commands
+    # return's a hash of name:path of plugins
+    def plugins
+      @plugins ||= list_plugins
 
-      return @commands
+      return @plugins
     end
 
-    def exec(cmd, opts = {})
-      @commands.each do |word,path|
-        word = word.to_s
+    def fire!(options = {})
+      plugins.each do |word,path|
         if ARGV.include? word
           # We found our command, time to split here.
           index = ARGV.index word
-          Bini::SubCommand.global_parser.parse!  ARGV[0...index]
-          exit if @bail = true
-          puts "#{path} #{ARGV[index+1..-1].join " "}"
+          Bini::SubCommand.global_parser.parse! ARGV[0...index]
+          exit if @bail == true
+
+          # This is/ a load, so the state is set.
+          load path
         end
       end
-
     end
 
-    def find_commands
-      @commands ||= {}
-      @bin_path.split(":").each do |path|
-        files = Dir.glob("#{path}/#{prefix}-*")
-        files.each {|f| @commands[file_to_command(f).to_sym] = f}
-      end
+    def list_plugins
+      plugins ||= generate_plugin_list
+    end
 
-      return @commands
+    def list_plugin_execs
+      output = []
+      plugins.each do |g|
+        output += Gem::Specification.find_by_name("#{prefix}-#{g}").executables
+      end
+      output
     end
 
     private
-    def file_to_command(filename)
-      return filename.split("/").last.split("-").last
+
+    def generate_plugin_list
+      Gem::Specification.find_all {|s| s.name =~ /#{prefix}-/}.map {|i| i.name.split(/-/)[1]}.uniq
     end
+
   end
 end
-
-
-
