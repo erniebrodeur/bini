@@ -1,3 +1,6 @@
+# Last: You built out the test gem, included it in gem via github.
+# Next: Build gather executables and build out test
+# Next++: remember, look for bin/prefix-command in our pluginlist, execute
 require 'bini/optparser'
 module Bini
   module SubCommand
@@ -10,12 +13,14 @@ module Bini
 
     # return's a hash of name:path of plugins
     def plugins
-      @plugins ||= list_plugins
-
-      return @plugins
+      @plugins ||= generate_plugin_list
     end
 
-    def fire!(options = {})
+    def executables
+      @executables ||= generate_executable_list
+    end
+
+    def fire
       plugins.each do |word,path|
         if ARGV.include? word
           # We found our command, time to split here.
@@ -23,28 +28,25 @@ module Bini
           Bini::SubCommand.global_parser.parse! ARGV[0...index]
           exit if @bail == true
 
-          # This is/ a load, so the state is set.
+          # finally, load the executable to get the process started
           load path
         end
       end
     end
 
-    def list_plugins
-      plugins ||= generate_plugin_list
-    end
-
-    def list_plugin_execs
+    private
+    def generate_executable_list
       output = []
-      plugins.each do |g|
-        output += Gem::Specification.find_by_name("#{prefix}-#{g}").executables
+      Bini::SubCommand.plugins.each do |g|
+        spec = Gem::Specification.find_by_name(g)
+        output += spec.executables.map {|i| "#{spec.bin_dir}/#{i}"}
       end
+      puts output
       output
     end
 
-    private
-
     def generate_plugin_list
-      Gem::Specification.find_all {|s| s.name =~ /#{prefix}-/}.map {|i| i.name.split(/-/)[1]}.uniq
+      Gem::Specification.find_all {|s| s.name =~ /#{@prefix}-/}.map {|g| g.name }
     end
 
   end
