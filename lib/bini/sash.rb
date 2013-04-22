@@ -12,10 +12,23 @@ module Bini
     attr_accessor :auto_load
     attr_accessor :auto_save
 
-    # initialization sets the values of the class Sash, not the contents of the Hash.
+    # overrides:{Hash.new}
+    # options: Sash options.
     def initialize(params = {})
-      params.each { |k,v| instance_variable_set "@" + k.to_s,v}
+      # if we get any params not listed above, throw an exception.
+      p = params.select { |k,v| k != :options && k != :overrides}
+      raise ArgumentError, "Extra values passed in: #{p}" if p.count > 0
+
+      # set our options to our attributes.
+      params[:options].each { |k,v| instance_variable_set "@" + k.to_s,v} if params[:options]
+
+      # should we load our data?
       load if @auto_load
+
+      # did we get any overrides?
+      self.merge! params[:overrides] if params[:overrides]
+
+      return self
     end
 
     # The base directory of the save file.
@@ -94,3 +107,4 @@ module Bini
     end
   end
 end
+

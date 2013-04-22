@@ -1,19 +1,20 @@
-require 'bini'
+require 'spec_helper'
 
-include Bini
-
-describe "Sash" do
-	def random_file
-		"tmp/sash-#{(0...4).map{rand(16).to_s(16)}.join}.yaml"
-	end
-
+describe Bini::Sash do
 	before (:all) do
 		FileUtils.mkdir_p 'tmp'
 	end
 
+	describe "Configuration" do
+	end
+
+	describe "Saving" do
+		it "Can take overrides"
+		it "Can set options"
+	end
 	before (:each) do
-		@filename = random_file
-		@s = Sash.new file:@filename
+		@filename = "tmp/sash_savefile.yaml"
+		@s = Bini::Sash.new options:{file:@filename}
 		@s[:before_each] = true
 	end
 
@@ -28,7 +29,7 @@ describe "Sash" do
 	it "can save" do
 		@s['foo'] = :bar
 		@s.save
-		@s2 = Sash.new file:@filename
+		@s2 = Bini::Sash.new options:{file:@filename}
 		@s2.load
 		@s2['foo'].should eq :bar
 	end
@@ -43,9 +44,9 @@ describe "Sash" do
 	end
 
 	it "can auto save" do
-		@s = Sash.new file:@filename, auto_save:true
+		@s = Bini::Sash.new options:{file:@filename, auto_save:true}
 		@s[:auto_save] = true
-		@s2 = Sash.new file:@filename
+		@s2 = Bini::Sash.new options:{file:@filename}
 		@s2.load
 		@s2[:auto_save].should be true
 	end
@@ -53,7 +54,7 @@ describe "Sash" do
 	it "can auto load" do
 		@s[:auto_load] = true
 		@s.save
-		@s2 = Sash.new file:@filename, auto_load:true
+		@s2 = Bini::Sash.new options:{file:@filename, auto_load:true}
 		@s2[:auto_load].should be true
 	end
 
