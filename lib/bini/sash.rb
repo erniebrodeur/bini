@@ -75,9 +75,8 @@ module Bini
       if @file && File.exist?(@file) && File.stat(@file).size > 0
         h = YAML::load open(@file, 'r').read
         h.each { |k,v| self[k] = v}
-        return true
       end
-      false
+      return self
     end
 
     # Generate a backup file real quick.
