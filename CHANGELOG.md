@@ -1,3 +1,7 @@
+# (unreleased)
+* Added some documentation for Sash
+* Added overrides:{} and options:{} to Sash.  This splits out the options from any k/v's you want to set initially.
+
 # 0.6.0
 * renamed Bini.config to Bini::Config
 * 100% test coverage.
