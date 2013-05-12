@@ -65,5 +65,9 @@ module Bini
   def parameters?
     @defaults.map {|k,v| @defaults[k] != parameters[k]}.all?
   end
-end
 
+  # I feel like I should split this into it's own file, but for now.
+  # Autoloads.
+
+  autoload :OptionParser, 'bini/optparser'
+end
