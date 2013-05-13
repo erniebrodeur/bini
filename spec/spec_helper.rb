@@ -1,11 +1,9 @@
 require 'simplecov'
+require 'bini'
+
 SimpleCov.start do
   add_filter "/spec/"
 end
-
-require 'bini'
-require 'bini/optparser'
-require 'bini/config'
 
 include Bini
 
