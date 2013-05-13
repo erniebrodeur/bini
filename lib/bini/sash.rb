@@ -15,7 +15,7 @@ module Bini
     # overrides:{Hash.new}
     # options: Sash options.
     def initialize(params = {})
-      # if we get any params not listed above, throw an exception.
+      # Did we get options or overrides? if not, bail.
       p = params.select { |k,v| k != :options && k != :overrides}
       raise ArgumentError, "Extra values passed in: #{p}" if p.count > 0
 

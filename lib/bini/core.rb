@@ -20,13 +20,15 @@ module Bini
 
   @defaults = {}
   @defaults[:long_name] = Proc.new { $0.split("/").last }
-  @defaults[:cache_dir] = Proc.new { "#{Dir.home}/.cache/#{@long_name}" }
-  @defaults[:config_dir] = Proc.new { "#{Dir.home}/.config/#{@long_name}" }
+  @defaults[:cache_dir] = Proc.new { "#{Dir.home}/.cache/#{long_name}" }
+  @defaults[:config_dir] = Proc.new { "#{Dir.home}/.config/#{long_name}" }
+  @defaults[:data_dir] = Proc.new { "#{Dir.home}/.local/share/#{long_name}/data" }
+  @defaults[:backup_dir] = Proc.new { "#{Dir.home}/.local/share/#{long_name}/backup" }
   @defaults[:version] = Proc.new { "v0.0.0" }
 
   # Dynamic attribute's based off the keys.
   def keys
-    keys ||= [:long_name, :cache_dir, :config_dir, :version]
+    keys ||= [:long_name, :cache_dir, :config_dir, :backup_dir, :data_dir, :version]
   end
 
   keys.each do |key|
