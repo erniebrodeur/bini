@@ -18,13 +18,11 @@ module Bini
   # A collection of sane defaults to be provided if the same attr is still nil.
   attr_accessor :defaults
 
-  # I break this out so that I can use long name right away, this allows methods
-  # like configure to work.
-
   @defaults = {}
-  @defaults[:long_name] = $0.split("/").last
-  @defaults[:cache_dir] = "#{Dir.home}/.cache/bini/#{@long_name}/"
-  @defaults[:config_dir] = "#{Dir.home}/.config/bini/#{@long_name}/"
+  @defaults[:long_name] = Proc.new { $0.split("/").last }
+  @defaults[:cache_dir] = Proc.new { "#{Dir.home}/.cache/#{@long_name}" }
+  @defaults[:config_dir] = Proc.new { "#{Dir.home}/.config/#{@long_name}" }
+  @defaults[:version] = Proc.new { "v0.0.0" }
 
   # Dynamic attribute's based off the keys.
   def keys
@@ -34,7 +32,10 @@ module Bini
   keys.each do |key|
     define_method(key) do
       v = instance_variable_get "@#{key}"
-      return !v ? @defaults[key] : v
+      return v if v
+
+      @defaults[key] ? default = @defaults[key].call : default = nil
+      return default
     end
     define_method("#{key}=".to_sym) do |dir|
       instance_variable_set "@#{key}", dir
@@ -54,10 +55,5 @@ module Bini
     @values
   end
   alias_method :params, :parameters
-
-  # Returns true or false if all parameters are set to something other than defaults.
-  def parameters?
-    @defaults.map {|k,v| @defaults[k] != parameters[k]}.all?
-  end
 end
 

@@ -12,22 +12,21 @@ describe "Bini" do
 		Bini.version = nil
 	end
 
-	describe "parameters?" do
-		it 'will return true only if everything is true.' do
-			Bini.long_name = "tmp/test"
-			Bini.parameters?.should be_false
-			Bini.cache_dir = "tmp/here"
-			Bini.config_dir = "tmp/there"
-			Bini.parameters?.should be_true
+	describe "long_name" do
+		it "Will update the directories automatically." do
+			Bini.long_name = "rspecify"
+			Bini.long_name.should eq "rspecify"
+			Bini.cache_dir.should eq "/home/ebrodeur/.cache/rspecify"
 		end
 	end
 
+	describe
 	# Dynamically generate our key tests, more for fun then any real need.
 	Bini.keys.each do |key|
 		describe "#{key}" do
 			it "can be reset to a default" do
 				Bini.send "#{key}=", nil
-				Bini.send(key).should eq Bini.defaults[key]
+				Bini.send(key).should eq Bini.defaults[key].call
 			end
 			it "can be overriden" do
 				r = random_hex 16
@@ -45,6 +44,5 @@ describe "Bini" do
 		end
 	end
 
-	Bini.version
 end
 
