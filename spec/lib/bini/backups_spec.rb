@@ -2,17 +2,13 @@ require 'spec_helper.rb'
 
 # Tweakables as needed (though not bloody likely)
 BACKUP_FILE = "tmp/backup_input"
-BACKUP_HEX = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+BACKUP_HEX = "bbe571c8b767d648b65419743dfe851def6f85469edb934e7bf79b2c99765589"
 BACKUP_INDEX = "tmp/backup.json"
 
-describe Bini::Backups do
+describe "Bini::Backups" do
   before (:all) do
-    cleanup_files
     Bini.backup_dir = 'tmp/backups'
-    generate_testfile BACKUP_FILE
-  end
-
-  before (:each) do
+    generate_testfile
     @backup = Bini::Backups.new index_file:BACKUP_INDEX, auto_load:true
   end
 
@@ -30,25 +26,40 @@ describe Bini::Backups do
 
     it "will fail if the one file has two hex sums"
 
+    it "will store the mode in the index"
+
     it "will copy the file into the backups" do
       File.exists?("#{Bini.backup_dir}/#{BACKUP_HEX}").should be_true
     end
   end
 
   describe "restore" do
-    it "stuff" do
+    before(:each) do
+      @backup = Bini::Backups.new index_file:BACKUP_INDEX, auto_load:true
       FileUtils.rm BACKUP_FILE if BACKUP_FILE
       @backup.restore BACKUP_FILE
+    end
+
+    it "Will remove the file from the index" do
+      @backup.index[BACKUP_HEX].should be_nil
+    end
+
+    it "will restore the proper mode on the file"
+
+    it "will copy the file to the restore point" do
       File.exists?(BACKUP_FILE).should be_true
     end
-    it "Will remove the file from the index"
-    it "will copy the file to the restore point"
+
     it "will fail if a file is already there and not the same md5sum"
 
     describe "last entry" do
       it "will clean up the backup dir"
       it "will remove the index entry as needed"
     end
+  end
+
+  after(:all) do
+    cleanup_files
   end
 end
 
@@ -57,6 +68,12 @@ def cleanup_files
   FileUtils.rm_rf "tmp/backup*"
 end
 
-def generate_testfile(file)
-  open(file, 'w').write('gibberish') if !File.exists? file
+def generate_testfile
+  unless File.exists? BACKUP_FILE
+    # so ruby wants to be clever, I want a file with goddamn output.
+    file = open(BACKUP_FILE, 'w')
+    file.write 'gibberish'
+    file.sync
+    file.close
+  end
 end

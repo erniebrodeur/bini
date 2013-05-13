@@ -58,15 +58,17 @@ module Bini
       end
       true
     end
-    # Store a value in the Hash.  Can autosave.
-    def []=(key,value)
-      store key, value
-      save! if @auto_save == true
-    end
+
     # Save the hash to a file, overwriting if necessary.
     def save!
       delete_file
       save
+    end
+
+    # Store a value in the Hash.  Can autosave.
+    def []=(key,value)
+      store key, value
+      save! if @auto_save == true
     end
 
     # Load the save file into self.

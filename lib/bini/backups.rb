@@ -10,7 +10,8 @@ module Bini
     end
 
     def generate_key(filename)
-      Digest::SHA256.hexdigest open(filename).read
+      return nil if !File.exists? filename
+      return Digest::SHA256.hexdigest(open(filename).read)
     end
 
 
@@ -28,11 +29,14 @@ module Bini
     def restore(filename)
       raise "ohShit" if duplicate_hex? filename
 
-      hex = index.select {|k,v| v.include? filename }.first.first
-
+      hex = index.select {|k,v| v.include? filename }.keys.first
       return false if !index[hex] || !index[hex].include?(filename)
+      restore_file = "#{Bini.backup_dir}/#{hex}"
 
-      FileUtils.cp "#{Bini.backup_dir}/#{hex}", filename
+      current_hex = generate_key(filename)
+      return false if current_hex && current_hex != hex
+
+      FileUtils.cp restore_file, filename, verbose:true
       index[hex].delete filename
       index.delete_if {|k,v| k == hex} if index[hex].empty?
       index.save
