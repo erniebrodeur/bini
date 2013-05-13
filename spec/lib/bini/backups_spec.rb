@@ -7,19 +7,13 @@ BACKUP_INDEX = "tmp/backup.json"
 
 describe Bini::Backups do
   before (:all) do
+    cleanup_files
     Bini.backup_dir = 'tmp/backups'
     generate_testfile BACKUP_FILE
   end
 
   before (:each) do
-    @backup = Bini::Backups.new index_file:BACKUP_INDEX
-  end
-
-  after(:all) do
-    FileUtils.rm BACKUP_FILE
-    FileUtils.rm BACKUP_INDEX
-    FileUtils.rm "#{BACKUP_INDEX}.bak" if File.exists? "#{BACKUP_INDEX}.bak"
-    FileUtils.rm_rf Bini.backup_dir
+    @backup = Bini::Backups.new index_file:BACKUP_INDEX, auto_load:true
   end
 
   describe "index" do
@@ -42,6 +36,11 @@ describe Bini::Backups do
   end
 
   describe "restore" do
+    it "stuff" do
+      FileUtils.rm BACKUP_FILE if BACKUP_FILE
+      @backup.restore BACKUP_FILE
+      File.exists?(BACKUP_FILE).should be_true
+    end
     it "Will remove the file from the index"
     it "will copy the file to the restore point"
     it "will fail if a file is already there and not the same md5sum"
@@ -53,6 +52,10 @@ describe Bini::Backups do
   end
 end
 
+
+def cleanup_files
+  FileUtils.rm_rf "tmp/backup*"
+end
 
 def generate_testfile(file)
   open(file, 'w').write('gibberish') if !File.exists? file

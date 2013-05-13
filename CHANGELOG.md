@@ -3,6 +3,7 @@
 * Added overrides:{} and options:{} to Sash.  This splits out the options from any k/v's you want to set initially.
 * Added autoloads!
 * Fixed bini.long_name by making them all procs. (github #6)
+* Added Bini::Backups as a new feature
 
 # 0.6.0
 * renamed Bini.config to Bini::Config
