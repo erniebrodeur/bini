@@ -16,17 +16,17 @@ A toolbox to help me rapidly build/deploy a cli.  Filled with assumptions about 
 
 ## Installation
 
-To install:
+    % gem install bini
 
-		% gem install bini
+## Design philosophy
 
-To use inside of an application, add this to the your gemfile:
+If such a thing can be said.
 
-		% gem 'bini'
-
-and run bundle to make it available:
-
-		% bundle
+* Whenever possible, sane defaults will be supplied.
+* A minimum amount of configuration before execution.
+* If it requires a large chunk of requires, put it in a sub gem.
+* Speed is of the utmost importance.
+* Whenever possible, use stuff out of the stdlib.
 
 ## Usage
 
@@ -36,13 +36,24 @@ Bini is broken up into a few pieces, always include this first:
 require 'bini'
 ```
 
-Optional components can be loaded like this:
+This will load the core portions of bini and the autoload set.
 
-```ruby
-require 'bini/config'
-require 'bini/optparser'
-require 'bini/log'
-```
+Features can then be accessed simply by using them.
+
+# Features
+
+## OptionParser
+
+Provides options.  Options glorious options.  Not useful for a sub command based
+binary, more for a simple one with --(o)ptions.
+
+Automatically provides --(v)ersion and --(h)elp.
+
+## Backups
+
+Store files by sha256 sum into an index of files.  Useful for small arrays of text
+files.  Mostly intended for polite uninstall and cleaning up after myself if
+I make destrucive bins.
 
 ## Sash
 
@@ -87,16 +98,6 @@ If backup or mode are set, they will update at the next time you save.
 Generated documentation is available via ```yard```.
 
 Examples and wiki coming if they are ever needed.
-
-## Design philosophy
-
-If such a thing can be said.
-
-* Whenever possible, sane defaults will be supplied.
-* A minimum amount of configuration before execution.
-* If it requires a large chunk of requires, put it in a sub gem.
-* Speed is of the utmost importance.
-* Whenever possible, use stuff out of the stdlib.
 
 ## Contributing
 
