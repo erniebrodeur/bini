@@ -10,7 +10,7 @@ describe "Bini" do
 		it "Will update the directories automatically." do
 			Bini.long_name = "rspecify"
 			Bini.long_name.should eq "rspecify"
-			Bini.cache_dir.should eq "/home/ebrodeur/.cache/rspecify"
+			Bini.cache_dir.should eq "#{Dir.home}/.cache/rspecify"
 		end
 	end
 
