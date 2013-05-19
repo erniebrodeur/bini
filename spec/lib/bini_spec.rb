@@ -3,13 +3,7 @@ require 'spec_helper'
 # I'm not 100% sure convinvced any of these do what I think they do.
 describe "Bini" do
 	before (:each) do
-		Bini.long_name = nil
-		@long_name = Bini.long_name
-		Bini.cache_dir = nil
-		@cache_dir = Bini.cache_dir
-		Bini.config_dir = nil
-		@config_dir = Bini.config_dir
-		Bini.version = nil
+		Bini.clear
 	end
 
 	describe "long_name" do

@@ -17,18 +17,34 @@ module Bini
 
   # A collection of sane defaults to be provided if the same attr is still nil.
   attr_accessor :defaults
+  attr_accessor :long_name
+  attr_accessor :cache_dir
+  attr_accessor :config_dir
+  attr_accessor :data_dir
+  attr_accessor :version
 
   @defaults = {}
-  @defaults[:long_name] = Proc.new { $0.split("/").last }
-  @defaults[:cache_dir] = Proc.new { "#{Dir.home}/.cache/#{@long_name}" }
-  @defaults[:config_dir] = Proc.new { "#{Dir.home}/.config/#{@long_name}" }
-  @defaults[:version] = Proc.new { "v0.0.0" }
+  @defaults[:long_name]   = Proc.new { $0.split("/").last }
+  @defaults[:cache_dir]   = Proc.new { "#{Dir.home}/.cache/#{@long_name}" }
+  @defaults[:config_dir]  = Proc.new { "#{Dir.home}/.config/#{@long_name}" }
+  @defaults[:data_dir]    = Proc.new { "#{Dir.home}/.local/share/#{@long_name}" }
+  @defaults[:version]     = Proc.new { "v0.0.0" }
 
-  # Dynamic attribute's based off the keys.
+  # Dynamic attribute's based off the defaults.
   def keys
-    keys ||= [:long_name, :cache_dir, :config_dir, :version]
+    Bini.instance_methods.select do |m|
+      m =~ /=$/ && m != :defaults=
+    end.map do |m|
+      m[0..-2].to_sym
+    end
   end
 
+  # Reset the defaults back to nothing.
+  def clear
+    @defaults.each do |key,value|
+      instance_variable_set "@#{key}", nil
+    end
+  end
   keys.each do |key|
     define_method(key) do
       v = instance_variable_get "@#{key}"

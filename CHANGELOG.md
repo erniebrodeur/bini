@@ -1,5 +1,7 @@
 # (unreleased)
-* Added some documentation for Sash
+* Added Bini.clear to reset defaults.  Refactored how defaults and attributes are generated.
+* Added Bini.data_dir (default: ~/.local/share/#{long_name})
+* Added some documentation for Sash.
 * Added overrides:{} and options:{} to Sash.  This splits out the options from any k/v's you want to set initially.
 * Added autoloads!
 * Fixed bini.long_name by making them all procs. (github #6)
