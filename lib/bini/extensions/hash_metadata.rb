@@ -6,6 +6,7 @@ module Bini
       def metadata
         @metadata ||= Hash.new
       end
+
     end
   end
 end
