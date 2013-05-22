@@ -10,3 +10,10 @@ module Bini
   autoload :Prompts,                 'bini/prompts'
   autoload :VERSION,                 'bini/version'
 end
+
+module Bini
+  module Extensions
+    autoload :HashMetadata, 'bini/extensions/hash_metadata'
+  end
+end
+
