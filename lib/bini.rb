@@ -9,4 +9,9 @@ module Bini
   autoload :FileMagic,               'bini/filemagic'
   autoload :Prompts,                 'bini/prompts'
   autoload :VERSION,                 'bini/version'
+
+  module Extensions
+    autoload :Savable,               'bini/extensions/savable'
+  end
+
 end
