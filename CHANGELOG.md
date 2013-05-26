@@ -1,4 +1,4 @@
-# (unreleased)
+# 0.7.0
 * Added Bini::Extensions::Savable.  This can extend any hash into a savable one.
 * Updated Sash to be built off Extensions::Savable.
 * Added Bini.clear to reset defaults.  Refactored how defaults and attributes are generated.
