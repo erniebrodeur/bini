@@ -1,4 +1,6 @@
 # (unreleased)
+* Added Bini::Extensions::Savable.  This can extend any hash into a savable one.
+* Updated Sash to be built off Extensions::Savable.
 * Added Bini.clear to reset defaults.  Refactored how defaults and attributes are generated.
 * Added Bini.data_dir (default: ~/.local/share/#{long_name})
 * Added some documentation for Sash.
