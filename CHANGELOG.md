@@ -5,7 +5,7 @@
 * Added Bini.data_dir (default: ~/.local/share/#{long_name})
 * Added some documentation for Sash.
 * Added overrides:{} and options:{} to Sash.  This splits out the options from any k/v's you want to set initially.
-* Added autoloads!
+* Added autoloads, from now on you just have to require 'bini' and use the modules as you see fit.
 * Fixed bini.long_name by making them all procs. (github #6)
 
 # 0.6.0

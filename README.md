@@ -43,44 +43,63 @@ require 'bini/config'
 require 'bini/optparser'
 require 'bini/log'
 ```
+## Extensions
+### Savable
 
-## Sash
-
-Sash is a savable hash.  It saves the key/value pairs from the hash into a
+Make any hash savable.  It saves the key/value pairs from the hash into a
 YAML file that can be loaded later.  It manages permissions (optionally), can
-create a backup/save file, automatically save on changes, as well as
-automatically load on startup. It can be configured before use, as well as
-reconfigured during use.
+create a backup/save file, automatically save on changes.
 
-### Configuration
+To use it just ```include Bini::Extensions::Savable``` in the top of your class
 
-Configuration can be either at initialization or after.  The one drawback is
-you cannot (currently) feed it a new hash to set the initial values.
+```ruby
+class NewClass < Hash
+  include Bini::Exetensions::Savable
+end
+```
 
-The five main settings are:
+Now when you create the new object, it will have access to a few addtional
+methods.
 
-* file:     Filename to save the hash to.
-* backup:   Boolean, whether to produce a backup or not.
-* mode:     FixNum: mode to store it as: 0600, 0755, 0644 and so on.
-* autosave: Boolean: Automatically save on changes.
-* autoload: Boolean: Automatically load on init.
+    % obj.save
+    % obj.load
 
-The values for these do not get stored in the YAML file.  Only the k/v pairs you
-set do.
+Are the main two, the other methods can be used but are typically called through
+those two.  These secondary methods are:
 
-### Examples
+    % obj.backup
+    % obj.set_mode
 
-Configuration:
+Backup will create a backup file on the spot.  This won't save the current hash,
+just copy the save file.
 
-    s = Bini::Sash.new file:'filename', auto_save:true
+Set mode will set the mode stored in ```obj.options[:mode]``` on the file.
 
-Or after creation:
+You can check if the obj needs to be saved with ```is_dirty?```.  This will
+return ```true``` if you need to save and false if you do not.
 
-    s.auto_save = true
-    s.auto_load = false
-    s.backup = true
+To configure savable you create k/v pairs in it's options.
 
-If backup or mode are set, they will update at the next time you save.
+    % obj.options[:backup] = true
+
+Options is just anothr hash to contain the various settings cleanly.
+
+  * file:     Filename to save the hash to.
+  * backup:   Boolean, whether to produce a backup or not.
+  * mode:     FixNum: mode to store it as: 0600, 0755, 0644 and so on.
+  * autosave: Boolean: Automatically save on changes.
+
+## Helpers
+### Sash
+
+Sash is a class extended from hash with savable and a few extra features.  You can add
+overrides (load values into the hash on creation), options at creation and autoload.
+
+Overrides are just a way to set values on creation.
+
+### Additional Options
+
+  * autoload:  Boolean: set to true to load the value of the config right on creation
 
 ### API
 
