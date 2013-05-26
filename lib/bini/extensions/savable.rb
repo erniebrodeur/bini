@@ -24,7 +24,6 @@ module Bini
         return false if options[:dirty] && options[:dirty] != true
 
         FileUtils.mkdir_p basedir if !Dir.exist? basedir
-        backup if options[:backup]
 
         # I do this the long way because I want an immediate sync.
         f = open(options[:file], 'w')
@@ -34,6 +33,7 @@ module Bini
         f.sync
         f.close
 
+        backup if options[:backup]
         set_mode if options[:mode]
         options[:dirty] = false
         return true

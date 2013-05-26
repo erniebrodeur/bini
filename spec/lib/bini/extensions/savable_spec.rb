@@ -9,6 +9,7 @@ describe Bini::Extensions::Savable do
     Bini.config_dir = "tmp/"
     Bini.long_name = "savable_test"
     @obj = TestClass.new
+    @obj.clean_files
   end
 
   it "will (auto)save" do
