@@ -1,6 +1,6 @@
 module Bini
   module Extensions
-    module HashMetadata
+    module Metadata
       extend self
 
       def metadata

@@ -1,11 +1,11 @@
 require 'spec_helper'
-class TestClass < Hash
-  include Bini::Extensions::HashMetadata
+class TestClass < Object
+  include Bini::Extensions::Metadata
 end
 
 describe Bini do
   describe Extensions do
-    describe 'HashMetadata' do
+    describe 'Metadata' do
       before (:each) do
         @test_hash = {foo:'bar', one:1, two:2}
         @obj = TestClass.new
@@ -24,4 +24,3 @@ describe Bini do
     end
   end
 end
-

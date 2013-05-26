@@ -13,8 +13,8 @@ end
 
 module Bini
   module Extensions
-    autoload :HashMetadata, 'bini/extensions/hash_metadata'
-    autoload :Savable, 'bini/extensions/savable'
+    autoload :Metadata,              'bini/extensions/metadata'
+    autoload :Savable,               'bini/extensions/savable'
   end
 end
 
