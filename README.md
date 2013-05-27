@@ -35,14 +35,6 @@ Bini is broken up into a few pieces, always include this first:
 ```ruby
 require 'bini'
 ```
-
-Optional components can be loaded like this:
-
-```ruby
-require 'bini/config'
-require 'bini/optparser'
-require 'bini/log'
-```
 ## Extensions
 ### Savable
 
